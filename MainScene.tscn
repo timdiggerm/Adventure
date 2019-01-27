@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://MainScene.gd" type="Script" id=1]
+[ext_resource path="res://NavigationSystem.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Character.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Object.tscn" type="PackedScene" id=4]
+
+[node name="MainScene" type="Node"]
+
+script = ExtResource( 1 )
+
+[node name="NavigationSystem" parent="." index="0" instance=ExtResource( 2 )]
+
+[node name="Character" parent="." index="1" instance=ExtResource( 3 )]
+
+position = Vector2( 50, 50 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Object" parent="." index="2" instance=ExtResource( 4 )]
+
+position = Vector2( 303.363, 232.624 )
+
+
