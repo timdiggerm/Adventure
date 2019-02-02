@@ -1,14 +1,5 @@
 extends HBoxContainer
 
-
-signal walk
-signal look
-signal hand
-
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
-
 func _ready():
 	# Called when the node is added to the scene for the first time.
 	# Initialization here
@@ -20,12 +11,12 @@ func _ready():
 #	pass
 
 func _on_WalkButton_pressed():
-	emit_signal("walk")
+	global.cursor_state = global.WALK
 
 
 func _on_LookButton_pressed():
-	emit_signal("look")
+	global.cursor_state = global.LOOK
 
 
 func _on_HandButton_pressed():
-	emit_signal("hand")
+	global.cursor_state = global.HAND

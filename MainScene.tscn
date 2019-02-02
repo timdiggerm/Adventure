@@ -1,11 +1,12 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://MainScene.gd" type="Script" id=1]
 [ext_resource path="res://NavigationSystem.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Character.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Object.tscn" type="PackedScene" id=4]
+[ext_resource path="res://ActionBar.tscn" type="PackedScene" id=5]
 
-[node name="MainScene" type="Node"]
+[node name="MainScene" type="Node" index="0"]
 
 script = ExtResource( 1 )
 
@@ -16,8 +17,12 @@ script = ExtResource( 1 )
 position = Vector2( 50, 50 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Object" parent="." index="2" instance=ExtResource( 4 )]
+[node name="Object" parent="." index="2" groups=[
+"Entities",
+] instance=ExtResource( 4 )]
 
 position = Vector2( 303.363, 232.624 )
+
+[node name="ActionBar" parent="." index="3" instance=ExtResource( 5 )]
 
 

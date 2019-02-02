@@ -1,21 +1,23 @@
 extends Node
 
-var cursor_state
 var character
 var nav_system
 var action_bar
 
 func _ready():
-	cursor_state = global.WALK
 	character = get_node("Character")
 	nav_system = get_node("NavigationSystem")
+	
+	#connect all entities' signals to appropriate callbacks
+	for o in get_tree().get_nodes_in_group("Entities"):
+		o.connect("message", self, "_handle_message")
+	
 	#nav_system.add_collision_box(get_node("Object"))
-	pass
 
 #input handling, if no gui elements have handled the event
 func _unhandled_input(event):
 	if event is InputEventMouseButton and not event.pressed:
-		if cursor_state == global.WALK:
+		if global.cursor_state == global.WALK:
 			character.new_path(nav_system.get_path(character.global_position,event.position))
 
 #func _process(delta):
@@ -24,13 +26,13 @@ func _unhandled_input(event):
 #	pass
 
 func _on_ActionBar_hand():
-	cursor_state = global.TOUCH
+	global.cursor_state = global.TOUCH
 
 func _on_ActionBar_look():
-	cursor_state = global.LOOK
+	global.cursor_state = global.LOOK
 
 func _on_ActionBar_walk():
-	cursor_state = global.WALK
-
-func get_cursor_state():
-	return cursor_state
+	global.cursor_state = global.WALK
+	
+func _handle_message(msg):
+	print(msg)
