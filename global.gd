@@ -1,6 +1,7 @@
 extends Node
 var cursor_state
 enum CURSOR_STATES {WALK, HAND, LOOK, SMELL, TASTE, LISTEN}
+var height = 1000
 
 # class member variables go here, for example:
 # var a = 2

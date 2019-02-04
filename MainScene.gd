@@ -1,11 +1,11 @@
 extends Node
 
-var character
+var player
 var nav_system
 var action_bar
 
 func _ready():
-	character = get_node("Character")
+	player = get_node("Player")
 	nav_system = get_node("NavigationSystem")
 	
 	#connect all entities' signals to appropriate callbacks
@@ -18,7 +18,7 @@ func _ready():
 func _unhandled_input(event):
 	if event is InputEventMouseButton and not event.pressed:
 		if global.cursor_state == global.WALK:
-			character.new_path(nav_system.get_path(character.global_position,event.position))
+			player.new_path(nav_system.get_path(player.global_position,event.position))
 
 #func _process(delta):
 #	# Called every frame. Delta is time since last frame.

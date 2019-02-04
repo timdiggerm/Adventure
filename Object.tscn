@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Object.gd" type="Script" id=1]
-[ext_resource path="res://images/tree.png" type="Texture" id=2]
+[ext_resource path="res://images/obj.png" type="Texture" id=2]
 [ext_resource path="res://ClickBox.gd" type="Script" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -20,7 +20,8 @@ script = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="0"]
 
-position = Vector2( 0, 205 )
+position = Vector2( 1.90735e-006, 45 )
+scale = Vector2( 3.84615, 0.625 )
 shape = SubResource( 1 )
 _sections_unfolded = [ "Transform" ]
 
@@ -42,7 +43,7 @@ script = ExtResource( 3 )
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ClickBox" index="0"]
 
 build_mode = 0
-polygon = PoolVector2Array( -90.5427, -203.474, 49.5619, -204.671, 128.595, -138.211, 172.902, -32.2346, 155.539, 22.2505, 116.022, 41.4101, 95.066, 67.7546, 105.843, 103.679, 49.5619, 111.462, 14.2364, 86.3155, 1.06415, 86.9142, 8.24902, 207.261, -12.1081, 207.261, -11.5093, 91.1054, -48.0323, 72.5445, -66.5932, 85.7167, -91.1415, 77.3344, -100.721, 98.889, -134.251, 98.2903, -136.047, 69.5508, -169.576, 37.219, -148.62, -29.8397, -137.843, -41.8144, -144.429, -128.631, -102.517, -172.339 )
+polygon = PoolVector2Array( 50, -50, 50, 50, -50, 50, -50, -50 )
 disabled = true
 
 [connection signal="clicked" from="ClickBox" to="." method="_on_ClickBox_clicked"]

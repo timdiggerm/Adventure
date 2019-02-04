@@ -2,19 +2,15 @@ extends KinematicBody2D
 
 signal message(msg)
 
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
+var hh
 
 func _ready():
-	# Called when the node is added to the scene for the first time.
-	# Initialization here
+	add_to_group("Entities")
+	hh = get_child(1).texture.get_height()/2
 	pass
 
-#func _process(delta):
-#	# Called every frame. Delta is time since last frame.
-#	# Update game logic here.
-#	pass
+func _process(delta):
+	z_index = -(global.height - self.global_position.y - hh)
 
 #func _input_event(event):
 #	print ("entered")

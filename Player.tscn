@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Object.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Player.gd" type="Script" id=2]
+[ext_resource path="res://images/player.png" type="Texture" id=3]
+
+[sub_resource type="CapsuleShape2D" id=1]
+
+custom_solver_bias = 0.0
+radius = 10.0
+height = 20.0
+
+[node name="Player" instance=ExtResource( 1 )]
+
+script = ExtResource( 2 )
+speed = 50
+
+[node name="CollisionShape2D" parent="." index="0"]
+
+position = Vector2( -0.0119894, -0.183685 )
+scale = Vector2( 2.48191, 1.24413 )
+shape = SubResource( 1 )
+
+[node name="Sprite" parent="." index="1"]
+
+texture = ExtResource( 3 )
+
+[node name="CollisionPolygon2D" parent="ClickBox" index="0"]
+
+polygon = PoolVector2Array( 18.5293, -25.0027, 25.2943, -17.8065, 25.2943, 17.0628, 18.6675, 24.9517, -17.6217, 24.9517, -24.8795, 17.8711, -24.8795, -18.2604, -17.7795, -25.0449 )
+
+
