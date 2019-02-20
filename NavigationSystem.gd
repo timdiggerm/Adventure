@@ -1,10 +1,11 @@
 extends Node2D
 
 var characterNav
+var navPolys
 
 func _ready():
 	characterNav = get_node("CharacterNav")
-	pass
+	navPolys = []
 
 #func _process(delta):
 #	# Called every frame. Delta is time since last frame.
@@ -13,6 +14,31 @@ func _ready():
 
 func get_path(obj1, obj2):
 	return characterNav.get_simple_path(obj1,obj2)
+
+func add_collision_box(obj):
+	var points = []
+	var box = obj.get_collision_box()
+	var shape = obj.get_collision_shape()
+	if shape.get_class() == "RectangleShape2D":
+		points.append(box.global_position + Vector2(shape.extents.x, shape.extents.y) * box.scale * 1.5)
+		points.append(box.global_position + Vector2(-shape.extents.x, shape.extents.y) * box.scale * 1.5)
+		points.append(box.global_position + Vector2(-shape.extents.x, -shape.extents.y) * box.scale * 1.5)
+		points.append(box.global_position + Vector2(shape.extents.x, -shape.extents.y) * box.scale * 1.5)
+	
+	characterNav.get_child(0).navpoly.add_outline(points)
+	characterNav.get_child(0).navpoly.make_polygons_from_outlines()
+
+func reload_nav():
+	characterNav.get_child(0).enabled = false
+	characterNav.get_child(0).enabled = true
+
+#func add_nav_map(map):
+#	var t = Transform2D(Vector2(0,0), Vector2(0,0), Vector2(0,0))
+#	print(map)
+#	#var id = characterNav.navpoly_add(map, t)
+#	var id = 0
+#	navPolys.append(id)
+#	return id
 
 #func add_collision_box(obj):
 #	var shape = obj.get_collision_box()

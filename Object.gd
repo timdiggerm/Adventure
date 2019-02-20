@@ -3,19 +3,18 @@ extends KinematicBody2D
 signal message(msg)
 
 var hh
+var stationary;
 
 func _ready():
+	stationary = true;
 	add_to_group("Entities")
-	hh = get_child(1).texture.get_height()/2
-	pass
+	set_init_hh()
 
 func _process(delta):
-	z_index = -(global.height - self.global_position.y - hh)
+	update_z()
 
-#func _input_event(event):
-#	print ("entered")
-#	if event is InputEventMouseButton and not event.pressed and global.cursor_state == global.TOUCH:
-#		print("object")
+func get_collision_shape():
+	return get_node("CollisionShape2D").get_shape()
 
 func get_collision_box():
 	return get_node("CollisionShape2D")
@@ -34,3 +33,9 @@ func _on_ClickBox_clicked():
 			pass
 		global.LISTEN:
 			pass
+
+func update_z():
+	z_index = -(global.height - self.global_position.y - hh)
+	
+func set_init_hh():
+	hh = get_child(1).texture.get_height()/2

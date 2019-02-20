@@ -8,7 +8,8 @@ var velocity = Vector2()
 
 func _ready():
 	goal = self.global_position
-	hh = get_child(1).texture.get_height()/2
+	stationary = false;
+	set_init_hh()
 
 func _process(delta):
 	if abs(goal.distance_to(self.global_position)) < 1:

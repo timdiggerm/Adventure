@@ -5,12 +5,11 @@
 
 [sub_resource type="NavigationPolygon" id=1]
 
-vertices = PoolVector2Array( -80, -80, 1130, -80, 1130, 700, -80, 700 )
+vertices = PoolVector2Array( -30, -30, 1060, -30, 1060, 630, -30, 630 )
 polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
-outlines = [ PoolVector2Array( -80, -80, 1130, -80, 1130, 700, -80, 700 ) ]
-_sections_unfolded = [ "Resource" ]
+outlines = [ PoolVector2Array( -30, -30, 1060, -30, 1060, 630, -30, 630 ) ]
 
-[node name="NavigationSystem" type="Node2D"]
+[node name="NavigationSystem" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 
