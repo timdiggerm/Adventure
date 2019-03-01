@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://MainScene.gd" type="Script" id=1]
 [ext_resource path="res://NavigationSystem.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Background.gd" type="Script" id=5]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Object.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Dialog.tscn" type="PackedScene" id=8]
 
 [node name="MainScene" type="Node" index="0"]
 
@@ -36,5 +37,10 @@ position = Vector2( 753.647, 391.788 )
 [node name="Object2" parent="." index="5" instance=ExtResource( 7 )]
 
 position = Vector2( 372.742, 412.193 )
+
+[node name="Dialog" parent="." index="6" instance=ExtResource( 8 )]
+
+visible = false
+_sections_unfolded = [ "Grow Direction", "Margin", "Popup", "Visibility" ]
 
 

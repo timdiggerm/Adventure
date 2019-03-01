@@ -3,11 +3,12 @@ extends Node
 var player
 var nav_system
 var action_bar
+var dialog_box
 
 func _ready():
 	player = get_node("Player")
 	nav_system = get_node("NavigationSystem")
-	
+	dialog_box = get_node("Dialog")
 	
 	for o in get_tree().get_nodes_in_group("Entities"):
 		#connect all entities' signals to appropriate callbacks
@@ -39,4 +40,5 @@ func _on_ActionBar_walk():
 	global.cursor_state = global.WALK
 	
 func _handle_message(msg):
-	print(msg)
+	dialog_box.displayMessage(msg)
+	#print(msg)
