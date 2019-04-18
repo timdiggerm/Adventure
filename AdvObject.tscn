@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://AdvObject.gd" type="Script" id=1]
+[ext_resource path="res://images/obj.png" type="Texture" id=2]
+[ext_resource path="res://ClickBox.gd" type="Script" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 10, 5 )
+
+[node name="AdvObject" type="KinematicBody2D"]
+script = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 45 )
+scale = Vector2( 3.84615, 0.625 )
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+
+[node name="ClickBox" type="Area2D" parent="."]
+script = ExtResource( 3 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ClickBox"]
+polygon = PoolVector2Array( 50, -50, 50, 50, -50, 50, -50, -50 )
+disabled = true
+
+[connection signal="clicked" from="ClickBox" to="." method="_on_ClickBox_clicked"]

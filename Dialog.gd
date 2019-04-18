@@ -12,9 +12,9 @@ func _ready():
 #	pass
 
 
-func _on_DismissBtn_pressed():
+func _on_DismissBtn_pressed() -> void:
 	hide()
 
-func displayMessage(message):
+func displayMessage(message) -> void:
 	textBox.bbcode_text = message
 	popup()

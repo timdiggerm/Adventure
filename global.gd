@@ -1,6 +1,6 @@
 extends Node
-var cursor_state
 enum CURSOR_STATES {WALK, HAND, LOOK, SMELL, TASTE, LISTEN}
+var cursor_state
 var height = 1000
 var scaleFactor = 0
 
@@ -9,7 +9,7 @@ var scaleFactor = 0
 # var b = "textvar"
 
 func _ready():
-	cursor_state = WALK
+	cursor_state = global.CURSOR_STATES.WALK
 	pass
 
 #func _process(delta):

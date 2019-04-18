@@ -1,10 +1,12 @@
 extends Node2D
 
-var characterNav
-var navPolys
+class_name NavigationSystem
+
+var characterNav : Navigation2D
+var navPolys : Array
 
 func _ready():
-	characterNav = get_node("CharacterNav")
+	characterNav = get_node("CharacterNav") as Navigation2D
 	navPolys = []
 
 #func _process(delta):
@@ -12,10 +14,10 @@ func _ready():
 #	# Update game logic here.
 #	pass
 
-func get_path(obj1, obj2):
+func get_nav_path(obj1 : Vector2, obj2 : Vector2) -> PoolVector2Array:
 	return characterNav.get_simple_path(obj1,obj2)
 
-func add_collision_box(obj):
+func add_collision_box(obj : AdvObject) -> void:
 	var points = []
 	var box = obj.get_collision_box()
 	var shape = obj.get_collision_shape()
@@ -25,12 +27,12 @@ func add_collision_box(obj):
 		points.append(box.global_position + Vector2(-shape.extents.x, -shape.extents.y) * box.scale * 1.5)
 		points.append(box.global_position + Vector2(shape.extents.x, -shape.extents.y) * box.scale * 1.5)
 	
-	characterNav.get_child(0).navpoly.add_outline(points)
-	characterNav.get_child(0).navpoly.make_polygons_from_outlines()
+	(characterNav.get_child(0) as NavigationPolygonInstance).navpoly.add_outline(points)
+	(characterNav.get_child(0) as NavigationPolygonInstance).navpoly.make_polygons_from_outlines()
 
-func reload_nav():
-	characterNav.get_child(0).enabled = false
-	characterNav.get_child(0).enabled = true
+func reload_nav() -> void:
+	(characterNav.get_child(0) as NavigationPolygonInstance).enabled = false
+	(characterNav.get_child(0) as NavigationPolygonInstance).enabled = true
 
 #func add_nav_map(map):
 #	var t = Transform2D(Vector2(0,0), Vector2(0,0), Vector2(0,0))

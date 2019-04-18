@@ -8,9 +8,26 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "KinematicBody2D",
+"class": "AdvObject",
+"language": "GDScript",
+"path": "res://AdvObject.gd"
+}, {
+"base": "Node2D",
+"class": "NavigationSystem",
+"language": "GDScript",
+"path": "res://NavigationSystem.gd"
+}, {
+"base": "AdvObject",
+"class": "Player",
+"language": "GDScript",
+"path": "res://Player.gd"
+} ]
 _global_script_class_icons={
-
+"AdvObject": "",
+"NavigationSystem": "",
+"Player": ""
 }
 
 [application]

@@ -1,10 +1,12 @@
-extends "res://Object.gd"
+extends AdvObject
+
+class_name Player
 
 export (int) var speed = 50
 
-var path = []
-var goal = Vector2(0,0)
-var velocity = Vector2()
+var path : Array = []
+var goal : Vector2 = Vector2(0,0)
+var velocity : Vector2 = Vector2()
 
 func _ready():
 	goal = self.global_position
@@ -16,30 +18,30 @@ func _process(delta):
 		if path.size() > 0:
 			goal = path.pop_front()
 		else:
-			velocity = 0
+			velocity = Vector2(0,0)
 	else:
 		velocity = (goal - self.global_position).normalized() * speed
 		move_and_slide(velocity)
 	._process(delta)
 
-func new_path(new_path):
+func new_path(new_path) -> void:
 	goal = self.global_position
 	path.clear()
 	path.push_back(self.global_position)
 	for p in new_path:
 		path.push_back(p)
 		
-func _on_ClickBox_clicked():
+func _on_ClickBox_clicked() -> void:
 	match global.cursor_state:
-		global.WALK:
+		global.CURSOR_STATES.WALK:
 			pass
-		global.HAND:
+		global.CURSOR_STATES.HAND:
 			emit_signal("message", "How do you feel?")
-		global.LOOK:
+		global.CURSOR_STATES.LOOK:
 			emit_signal("message", "Hard to do without a mirror")
-		global.SMELL:
+		global.CURSOR_STATES.SMELL:
 			pass
-		global.TASTE:
+		global.CURSOR_STATES.TASTE:
 			pass
-		global.LISTEN:
+		global.CURSOR_STATES.LISTEN:
 			pass

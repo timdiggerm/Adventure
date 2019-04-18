@@ -10,13 +10,13 @@ func _ready():
 #	# Update game logic here.
 #	pass
 
-func _on_WalkButton_pressed():
-	global.cursor_state = global.WALK
+func _on_WalkButton_pressed() -> void:
+	global.cursor_state = global.CURSOR_STATES.WALK
 
 
-func _on_LookButton_pressed():
-	global.cursor_state = global.LOOK
+func _on_LookButton_pressed() -> void:
+	global.cursor_state = global.CURSOR_STATES.LOOK
 
 
-func _on_HandButton_pressed():
-	global.cursor_state = global.HAND
+func _on_HandButton_pressed()  -> void:
+	global.cursor_state = global.CURSOR_STATES.HAND
