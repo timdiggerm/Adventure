@@ -17,11 +17,11 @@ func _ready():
 func get_nav_path(obj1 : Vector2, obj2 : Vector2) -> PoolVector2Array:
 	return characterNav.get_simple_path(obj1,obj2)
 
-func add_collision_box(obj : AdvObject) -> void:
+func add_collision_box(obj : AdvThing) -> void:
 	var points = []
 	var box = obj.get_collision_box()
 	var shape = obj.get_collision_shape()
-	if shape.get_class() == "RectangleShape2D":
+	if shape is RectangleShape2D:
 		points.append(box.global_position + Vector2(shape.extents.x, shape.extents.y) * box.scale * 1.5)
 		points.append(box.global_position + Vector2(-shape.extents.x, shape.extents.y) * box.scale * 1.5)
 		points.append(box.global_position + Vector2(-shape.extents.x, -shape.extents.y) * box.scale * 1.5)

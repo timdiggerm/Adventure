@@ -22,6 +22,7 @@ func _ready():
 #input handling, if no gui elements have handled the event
 func _unhandled_input(event):
 	if event is InputEventMouseButton and not event.pressed:
+		#print("MainScene Handler")
 		if global.cursor_state == global.CURSOR_STATES.WALK:
 			player.new_path(nav_system.get_nav_path(player.global_position,event.position))
 

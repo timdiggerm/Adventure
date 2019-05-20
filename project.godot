@@ -14,6 +14,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://AdvObject.gd"
 }, {
+"base": "KinematicBody2D",
+"class": "AdvThing",
+"language": "GDScript",
+"path": "res://AdvThing.gd"
+}, {
 "base": "Node2D",
 "class": "NavigationSystem",
 "language": "GDScript",
@@ -26,6 +31,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "AdvObject": "",
+"AdvThing": "",
 "NavigationSystem": "",
 "Player": ""
 }

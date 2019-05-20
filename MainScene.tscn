@@ -6,8 +6,8 @@
 [ext_resource path="res://images/bg.png" type="Texture" id=4]
 [ext_resource path="res://Background.gd" type="Script" id=5]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=6]
-[ext_resource path="res://AdvObject.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Dialog.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Dialog.tscn" type="PackedScene" id=7]
+[ext_resource path="res://AdvThing.tscn" type="PackedScene" id=8]
 
 [node name="MainScene" type="Node"]
 script = ExtResource( 1 )
@@ -26,11 +26,7 @@ script = ExtResource( 5 )
 [node name="Player" parent="." instance=ExtResource( 6 )]
 position = Vector2( 82.9828, 521.023 )
 
-[node name="Object" parent="." instance=ExtResource( 7 )]
-position = Vector2( 753.647, 391.788 )
+[node name="Dialog" parent="." instance=ExtResource( 7 )]
 
-[node name="Object2" parent="." instance=ExtResource( 7 )]
-position = Vector2( 372.742, 412.193 )
-
-[node name="Dialog" parent="." instance=ExtResource( 8 )]
-
+[node name="AdvThing" parent="." instance=ExtResource( 8 )]
+position = Vector2( 353.404, 396.559 )
