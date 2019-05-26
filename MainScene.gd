@@ -42,4 +42,7 @@ func _on_ActionBar_walk() -> void:
 	
 func _handle_message(msg) -> void:
 	dialog_box.displayMessage(msg)
-	#print(msg)
+
+func _on_ActionBar_viewInventory():
+	#show inventory screen
+	pass # Replace with function body.

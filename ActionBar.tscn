@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://ActionBar.gd" type="Script" id=1]
 [ext_resource path="res://images/eye.png" type="Texture" id=2]
@@ -7,6 +7,8 @@
 [ext_resource path="res://images/walkS.png" type="Texture" id=5]
 [ext_resource path="res://images/hand.png" type="Texture" id=6]
 [ext_resource path="res://images/handS.png" type="Texture" id=7]
+[ext_resource path="res://images/inventory.png" type="Texture" id=8]
+[ext_resource path="res://images/inventoryS.png" type="Texture" id=9]
 
 [node name="ActionBar" type="HBoxContainer"]
 script = ExtResource( 1 )
@@ -34,6 +36,13 @@ texture_normal = ExtResource( 6 )
 texture_pressed = ExtResource( 7 )
 stretch_mode = 5
 
+[node name="InventoryButton" type="TextureButton" parent="."]
+margin_left = 104.0
+margin_right = 136.0
+margin_bottom = 26.0
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 9 )
 [connection signal="pressed" from="LookButton" to="." method="_on_LookButton_pressed"]
 [connection signal="pressed" from="WalkButton" to="." method="_on_WalkButton_pressed"]
 [connection signal="pressed" from="HandButton" to="." method="_on_HandButton_pressed"]
+[connection signal="pressed" from="InventoryButton" to="." method="_on_InventoryButton_pressed"]

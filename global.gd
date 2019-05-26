@@ -3,6 +3,8 @@ enum CURSOR_STATES {WALK, HAND, LOOK, SMELL, TASTE, LISTEN}
 var cursor_state
 var height = 1000
 var scaleFactor = 0
+var idGenerator : RandomNumberGenerator
+var playerWidthHalf = 30
 
 # class member variables go here, for example:
 # var a = 2
@@ -10,7 +12,12 @@ var scaleFactor = 0
 
 func _ready():
 	cursor_state = global.CURSOR_STATES.WALK
-	pass
+	idGenerator = RandomNumberGenerator.new()
+	#idGenerator.set_seed(0)
+	idGenerator.randomize()
+
+func nextId() -> int:
+	return idGenerator.randi()
 
 #func _process(delta):
 #	# Called every frame. Delta is time since last frame.

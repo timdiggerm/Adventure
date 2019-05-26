@@ -1,5 +1,7 @@
 extends HBoxContainer
 
+signal viewInventory
+
 func _ready():
 	# Called when the node is added to the scene for the first time.
 	# Initialization here
@@ -20,3 +22,7 @@ func _on_LookButton_pressed() -> void:
 
 func _on_HandButton_pressed()  -> void:
 	global.cursor_state = global.CURSOR_STATES.HAND
+
+
+func _on_InventoryButton_pressed():
+	emit_signal("viewInventory")

@@ -16,4 +16,3 @@ script = ExtResource( 2 )
 
 [node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="CharacterNav"]
 navpoly = SubResource( 1 )
-

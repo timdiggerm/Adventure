@@ -1,4 +1,4 @@
-extends AdvObject
+extends AdvThing
 
 class_name Player
 
@@ -10,7 +10,8 @@ var velocity : Vector2 = Vector2()
 
 func _ready():
 	goal = self.global_position
-	stationary = false;
+	stationary = false
+	id = -1
 	set_init_hh()
 
 func _process(delta):

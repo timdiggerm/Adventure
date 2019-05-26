@@ -5,12 +5,14 @@ class_name AdvThing
 signal message(msg)
 
 var hh : float
-var stationary : bool;
+var stationary : bool
+var id : int
 
 func _ready():
 	stationary = true;
 	add_to_group("Entities")
 	set_init_hh()
+	id = global.nextId()
 
 func _process(delta):
 	update_z()
@@ -41,4 +43,7 @@ func update_z() -> void:
 	z_index = -(global.height - self.global_position.y - hh)
 	
 func set_init_hh() -> void:
-	hh = (get_child(2) as Sprite).get_texture().get_height()/2
+	hh = (get_child(2) as Sprite).get_texture().get_height()/2.0
+	
+func getId() -> int:
+	return id

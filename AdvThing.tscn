@@ -8,7 +8,7 @@
 script = ExtResource( 1 )
 
 [node name="CollisionPoly" type="CollisionPolygon2D" parent="."]
-polygon = PoolVector2Array( -50, 50, 50, 50, 40, 40, -40, 40 )
+polygon = PoolVector2Array( -50, 50, 50, 50, 50, 40, -50, 40 )
 
 [node name="ClickBox" type="Area2D" parent="."]
 script = ExtResource( 2 )

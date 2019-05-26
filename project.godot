@@ -10,11 +10,6 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "KinematicBody2D",
-"class": "AdvObject",
-"language": "GDScript",
-"path": "res://AdvObject.gd"
-}, {
-"base": "KinematicBody2D",
 "class": "AdvThing",
 "language": "GDScript",
 "path": "res://AdvThing.gd"
@@ -24,13 +19,12 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://NavigationSystem.gd"
 }, {
-"base": "AdvObject",
+"base": "AdvThing",
 "class": "Player",
 "language": "GDScript",
 "path": "res://Player.gd"
 } ]
 _global_script_class_icons={
-"AdvObject": "",
 "AdvThing": "",
 "NavigationSystem": "",
 "Player": ""

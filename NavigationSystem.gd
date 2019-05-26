@@ -26,6 +26,18 @@ func add_collision_box(obj : AdvThing) -> void:
 		points.append(box.global_position + Vector2(-shape.extents.x, shape.extents.y) * box.scale * 1.5)
 		points.append(box.global_position + Vector2(-shape.extents.x, -shape.extents.y) * box.scale * 1.5)
 		points.append(box.global_position + Vector2(shape.extents.x, -shape.extents.y) * box.scale * 1.5)
+	elif shape is PoolVector2Array:
+		#loop through array and exclude the polygon from the navigation system
+		for point in shape: 
+			#janky correction for problems with godot's nav system needing some work
+			var newPoint : Vector2
+			if(point.x > 0):
+				newPoint = Vector2(point.x + global.playerWidthHalf, point.y)
+			else:
+				newPoint = Vector2(point.x - global.playerWidthHalf, point.y)
+			points.append(box.global_position + newPoint * box.scale)
+			#print(point)
+			#points.append(point)
 	
 	(characterNav.get_child(0) as NavigationPolygonInstance).navpoly.add_outline(points)
 	(characterNav.get_child(0) as NavigationPolygonInstance).navpoly.make_polygons_from_outlines()
