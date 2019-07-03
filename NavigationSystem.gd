@@ -36,8 +36,6 @@ func add_collision_box(obj : AdvThing) -> void:
 			else:
 				newPoint = Vector2(point.x - global.playerWidthHalf, point.y)
 			points.append(box.global_position + newPoint * box.scale)
-			#print(point)
-			#points.append(point)
 	
 	(characterNav.get_child(0) as NavigationPolygonInstance).navpoly.add_outline(points)
 	(characterNav.get_child(0) as NavigationPolygonInstance).navpoly.make_polygons_from_outlines()

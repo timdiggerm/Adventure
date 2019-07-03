@@ -7,15 +7,59 @@ signal message(msg)
 var hh : float
 var stationary : bool
 var id : int
+var grabbable : bool
+var thing_name : String = "thing"
+var rough_radius : float = 0
+var queue : Array = []
+var current : Dictionary = {}
+
+var path : Array = []
+var goal : Vector2 = Vector2(0,0)
+var velocity : Vector2 = Vector2()
+export (int) var speed : float = 50
 
 func _ready():
-	stationary = true;
+	stationary = true
+	grabbable = false
 	add_to_group("Entities")
 	set_init_hh()
 	id = global.nextId()
+	for p in get_collision_shape():
+		rough_radius = max(rough_radius, p.length())
+	goal = self.global_position
 
 func _process(delta):
+	if current.has("type"):
+		match current.type:
+			"move":
+				if !current.in_progress:
+					new_path(current.path)
+					current.in_progress = true
+				else:
+					if abs(goal.distance_to(self.global_position)) < 1:
+						if path.size() > 0:
+							goal = path.pop_front()
+						else:
+							velocity = Vector2(0,0)
+							current = {}
+					else:
+						velocity = (goal - self.global_position).normalized() * speed
+						move_and_slide(velocity)
+			"grab":
+				print("Grab!")
+				current = {}
+				pass #grab the object
+	elif queue.size() > 0:
+		current = queue.pop_front()
+		
 	update_z()
+
+func new_path(new_path) -> void:
+	goal = self.global_position
+	path.clear()
+	path.push_back(self.global_position)
+	for p in new_path:
+		path.push_back(p)
 
 func get_collision_shape() -> PoolVector2Array:
 	return (get_node("CollisionPoly") as CollisionPolygon2D).get_polygon()
@@ -31,7 +75,7 @@ func _on_ClickBox_clicked() -> void:
 		global.CURSOR_STATES.HAND:
 			pass
 		global.CURSOR_STATES.LOOK:
-			emit_signal("message", "You see the object")
+			emit_signal("message", "You see the " + thing_name)
 		global.CURSOR_STATES.SMELL:
 			pass
 		global.CURSOR_STATES.TASTE:
