@@ -9,18 +9,23 @@ var grid : GridContainer
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	grid = find_node("InventoryGrid") as GridContainer
-	populateInventory()
+	populate_inventory()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
 
-func populateInventory():
-	for id in global.inventory:
-		var label = Label.new()
-		label.set_text(str(id))
-		grid.add_child(label)
+func populate_inventory():
+	for n in grid.get_children():
+		n.queue_free()
+
+	for obj in global.inventory:
+		#var label = Label.new()
+		print(obj)
+		var item = TextureRect.new()
+		item.set_texture(obj.get_child(obj.get_child_count()-1).get_texture())
+		grid.add_child(item)
 
 func _on_Dismiss_pressed():
 	hide()

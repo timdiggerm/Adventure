@@ -39,5 +39,8 @@ position = Vector2( 353.404, 396.559 )
 position = Vector2( 770.958, 531.856 )
 
 [node name="Item" parent="." instance=ExtResource( 10 )]
-position = Vector2( 559.848, 484.036 )
+position = Vector2( 396.559, 521.359 )
+
+[node name="Item2" parent="." instance=ExtResource( 10 )]
+position = Vector2( 665.986, 431.55 )
 [connection signal="viewInventory" from="ActionBar" to="." method="_on_ActionBar_viewInventory"]

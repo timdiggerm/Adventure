@@ -15,9 +15,9 @@ func _ready():
 	idGenerator = RandomNumberGenerator.new()
 	idGenerator.set_seed(0)
 	#idGenerator.randomize()
-	inventory.append(nextId())
-	inventory.append(nextId())
-	inventory.append(nextId())
+#	inventory.append(nextId())
+#	inventory.append(nextId())
+#	inventory.append(nextId())
 
 func nextId() -> int:
 	return idGenerator.randi()

@@ -46,9 +46,14 @@ func _process(delta):
 						velocity = (goal - self.global_position).normalized() * speed
 						move_and_slide(velocity)
 			"grab":
-				print("Grab!")
+				print("Grab " + current.target.thing_name + " !")
+				#I don't like doing it this way, but I don't know how
+				#else to do it, really
+				if thing_name == "Player":
+					global.inventory.append(current.target.duplicate())
+					current.target.queue_free()
+					pass
 				current = {}
-				pass #grab the object
 	elif queue.size() > 0:
 		current = queue.pop_front()
 		

@@ -62,8 +62,11 @@ func _handle_grab(obj) -> void:
 		"path": nav_system.get_nav_path(player.get_global_position(), goal),
 	})
 	player.queue.push_back({
-		"type":"grab"
+		"type":"grab",
+		"target":obj,
+		
 	})
 
 func _on_ActionBar_viewInventory():
+	inventory_box.populate_inventory()
 	inventory_box.popup()
