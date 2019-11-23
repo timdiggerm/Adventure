@@ -18,19 +18,27 @@ margin_bottom = 350.0
 [node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer"]
 margin_right = 40.0
 margin_bottom = 40.0
+rect_min_size = Vector2( 0, 300 )
 
 [node name="InventoryGrid" type="GridContainer" parent="MarginContainer/VBoxContainer/Panel"]
+margin_left = 10.0
+margin_top = 10.0
 margin_right = 480.0
 margin_bottom = 300.0
 rect_min_size = Vector2( 480, 300 )
+custom_constants/vseparation = 10
+custom_constants/hseparation = 10
 columns = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+margin_left = 25.0
 margin_right = 40.0
 margin_bottom = 40.0
 
 [node name="Dismiss" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
-margin_right = 12.0
+margin_left = 50.0
+margin_top = 50.0
+margin_right = 80.0
 margin_bottom = 20.0
 text = "Ok"
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/Dismiss" to="." method="_on_Dismiss_pressed"]

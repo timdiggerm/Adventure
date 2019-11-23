@@ -56,6 +56,8 @@ func _handle_message(msg) -> void:
 func _handle_grab(obj) -> void:
 	var v = player.get_global_position() - obj.get_global_position()
 	var goal = obj.get_global_position() + v / v.length() * (obj.rough_radius + player.rough_radius)
+	player.queue.clear()
+	player.current = {}
 	player.queue.push_back({
 		"type":"move",
 		"in_progress": false,
