@@ -12,6 +12,8 @@ func _ready():
 	dialog_box = get_node("Dialog") as PopupDialog
 	inventory_box = get_node("InventoryBox") as WindowDialog
 	
+	load_locale("default")
+	
 	for o in get_tree().get_nodes_in_group("Entities"):
 		# connect all entities' signals to appropriate callbacks
 		o.connect("message", self, "_handle_message")
@@ -72,3 +74,17 @@ func _handle_grab(obj) -> void:
 func _on_ActionBar_viewInventory():
 	inventory_box.populate_inventory()
 	inventory_box.popup()
+
+func load_locale(name : String) -> void:
+	print("loading")
+	var file = File.new()
+	file.open("res://locales/" + name + ".lcl", File.READ)
+	var content = file.get_as_text().split("\n")
+	file.close()
+	for line in content:
+		var tokens = line.split(" ")
+		match tokens[0]: #tokens[0] contains the type of thing we're loading
+			"obj": #objects have a scene name and x y coords
+				var obj = load("res://" + tokens[1] + ".tscn").instance() as Node
+				add_child(obj)
+				obj.set_global_position(Vector2(tokens[2], tokens[3]))

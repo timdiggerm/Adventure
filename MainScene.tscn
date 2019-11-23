@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://MainScene.gd" type="Script" id=1]
 [ext_resource path="res://NavigationSystem.tscn" type="PackedScene" id=2]
@@ -8,8 +8,6 @@
 [ext_resource path="res://Player.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Dialog.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Inventory.tscn" type="PackedScene" id=8]
-[ext_resource path="res://AdvThing.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Item.tscn" type="PackedScene" id=10]
 
 [node name="MainScene" type="Node"]
 script = ExtResource( 1 )
@@ -31,16 +29,4 @@ position = Vector2( 352.41, 532.686 )
 [node name="Dialog" parent="." instance=ExtResource( 7 )]
 
 [node name="InventoryBox" parent="." instance=ExtResource( 8 )]
-
-[node name="AdvThing" parent="." instance=ExtResource( 9 )]
-position = Vector2( 353.404, 396.559 )
-
-[node name="AdvThing2" parent="." instance=ExtResource( 9 )]
-position = Vector2( 770.958, 531.856 )
-
-[node name="Item" parent="." instance=ExtResource( 10 )]
-position = Vector2( 396.559, 521.359 )
-
-[node name="Item2" parent="." instance=ExtResource( 10 )]
-position = Vector2( 665.986, 431.55 )
 [connection signal="viewInventory" from="ActionBar" to="." method="_on_ActionBar_viewInventory"]
