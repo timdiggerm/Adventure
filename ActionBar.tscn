@@ -13,6 +13,9 @@
 [node name="ActionBar" type="HBoxContainer"]
 custom_constants/separation = -2
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="LookButton" type="TextureButton" parent="."]
 margin_right = 50.0
@@ -31,15 +34,15 @@ stretch_mode = 5
 
 [node name="HandButton" type="TextureButton" parent="."]
 margin_left = 96.0
-margin_right = 126.0
+margin_right = 146.0
 margin_bottom = 50.0
 texture_normal = ExtResource( 6 )
 texture_pressed = ExtResource( 7 )
 stretch_mode = 5
 
 [node name="InventoryButton" type="TextureButton" parent="."]
-margin_left = 124.0
-margin_right = 156.0
+margin_left = 144.0
+margin_right = 194.0
 margin_bottom = 50.0
 texture_normal = ExtResource( 8 )
 texture_pressed = ExtResource( 9 )

@@ -86,5 +86,7 @@ func load_locale(name : String) -> void:
 		match tokens[0]: #tokens[0] contains the type of thing we're loading
 			"obj": #objects have a scene name and x y coords
 				var obj = load("res://" + tokens[1] + ".tscn").instance() as Node
+				#this should later be changed to preload, and a dictionary of existing loaded scenes
+				# to prevent unnecessary reloads for many instances of same scene
 				add_child(obj)
 				obj.set_global_position(Vector2(tokens[2], tokens[3]))

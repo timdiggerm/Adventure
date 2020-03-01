@@ -1,0 +1,3 @@
+background [image file]
+obj [scene file name] [x] [y]
+exit [destination locale] [n] [x1] [y1] ... [xn] [yn]
