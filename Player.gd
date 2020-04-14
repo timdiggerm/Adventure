@@ -2,6 +2,7 @@ extends AdvThing
 
 class_name Player
 
+signal changescene(destination)
 
 func _ready():
 	stationary = false
@@ -18,3 +19,6 @@ func _on_ClickBox_clicked() -> void:
 		_:
 			._on_ClickBox_clicked()
 
+func use_portal(obj, destination):
+	print("Prepare to travel to ", destination)
+	emit_signal("changescene", destination)

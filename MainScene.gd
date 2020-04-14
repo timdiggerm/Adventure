@@ -5,12 +5,14 @@ var nav_system : NavigationSystem
 var action_bar : HBoxContainer
 var dialog_box : PopupDialog
 var inventory_box : WindowDialog
+var background : Sprite
 
 func _ready():
 	#player = get_node("Player") as KinematicBody2D
 	nav_system = get_node("NavigationSystem") as NavigationSystem
 	dialog_box = get_node("Dialog") as PopupDialog
 	inventory_box = get_node("InventoryBox") as WindowDialog
+	background = get_node("Background") as Sprite
 	
 	load_locale("default")
 	
@@ -74,8 +76,8 @@ func load_locale(name : String) -> void:
 	#player = Player.new()
 	player = load("res://Player.tscn").instance() as Player
 	player.set_global_position(Vector2(200, 400))
-	#print(player.get_property_list())
 	add_child(player)
+	player.connect("changescene", self, "change_scene")
 	
 	#Load the locale
 	var file = File.new()
@@ -85,6 +87,12 @@ func load_locale(name : String) -> void:
 	for line in content:
 		var tokens = line.split(" ")
 		match tokens[0]: #tokens[0] contains the type of thing we're loading
+			"background":
+				var img = Image.new()
+				img.load("res://images/" + tokens[1])
+				background.texture = ImageTexture.new()
+				background.texture.create_from_image(img, 0)
+				
 			"obj": #objects have a scene name and x y coords
 				var obj = load("res://" + tokens[1] + ".tscn").instance() as Node
 				#this should later be changed to preload, and a dictionary of existing loaded scenes
@@ -117,6 +125,12 @@ func load_locale(name : String) -> void:
 	#Connect all portals to the player
 	for o in get_tree().get_nodes_in_group("Portals"):
 		o.connect("body_entered", player, "use_portal", [o.get_name()])
-		
 	
 	nav_system.reload_nav()
+
+func change_scene(destination):
+	for o in get_tree().get_nodes_in_group("Entities"):
+		o.queue_free()
+	for o in get_tree().get_nodes_in_group("Portals"):
+		o.queue_free()
+	load_locale(destination)

@@ -2,4 +2,4 @@ background bg2.png
 obj AdvThing 300 400
 obj AdvThing 100 500
 obj AdvThing 400 550
-portal default 25 550
+portal default 400 400
