@@ -20,4 +20,4 @@ disabled = true
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 3 )
-[connection signal="clicked" from="ClickBox" to="." method="_on_ClickBox_clicked"]
+[connection signal="area_entered" from="ClickBox" to="." method="_on_ClickBox_area_entered"]

@@ -7,23 +7,15 @@ var dialog_box : PopupDialog
 var inventory_box : WindowDialog
 
 func _ready():
-	player = get_node("Player") as KinematicBody2D
+	#player = get_node("Player") as KinematicBody2D
 	nav_system = get_node("NavigationSystem") as NavigationSystem
 	dialog_box = get_node("Dialog") as PopupDialog
 	inventory_box = get_node("InventoryBox") as WindowDialog
 	
 	load_locale("default")
 	
-	for o in get_tree().get_nodes_in_group("Entities"):
-		# connect all entities' signals to appropriate callbacks
-		o.connect("message", self, "_handle_message")
-		# then add them to the nav system if it's a stationary object
-		if(o.stationary):
-			nav_system.add_collision_box(o)
-		if(o.grabbable):
-			o.connect("desired_grab", self, "_handle_grab")
-	
-	nav_system.reload_nav()
+
+
 
 #input handling, if no gui elements have handled the event
 func _unhandled_input(event):
@@ -77,6 +69,15 @@ func _on_ActionBar_viewInventory():
 
 func load_locale(name : String) -> void:
 	print("loading")
+	
+	#Create the player
+	#player = Player.new()
+	player = load("res://Player.tscn").instance() as Player
+	player.set_global_position(Vector2(200, 400))
+	#print(player.get_property_list())
+	add_child(player)
+	
+	#Load the locale
 	var file = File.new()
 	file.open("res://locales/" + name + ".lcl", File.READ)
 	var content = file.get_as_text().split("\n")
@@ -90,3 +91,32 @@ func load_locale(name : String) -> void:
 				# to prevent unnecessary reloads for many instances of same scene
 				add_child(obj)
 				obj.set_global_position(Vector2(tokens[2], tokens[3]))
+			"portal":
+				var destination = tokens[1]
+				var obj = Area2D.new()
+				var coll_shape = CollisionShape2D.new()
+				var rect = RectangleShape2D.new()
+				rect.set_extents(Vector2(10, 10))
+				coll_shape.set_shape(rect)
+				obj.add_child(coll_shape)
+				add_child(obj)
+				obj.set_global_position(Vector2(tokens[2], tokens[3]))
+				obj.set_name(destination)
+				obj.add_to_group("Portals")
+				
+	#Process all entities for various actions
+	for o in get_tree().get_nodes_in_group("Entities"):
+		# connect all entities' signals to appropriate callbacks
+		o.connect("message", self, "_handle_message")
+		# then add them to the nav system if it's a stationary object
+		if(o.stationary):
+			nav_system.add_collision_box(o)
+		if(o.grabbable):
+			o.connect("desired_grab", self, "_handle_grab")
+
+	#Connect all portals to the player
+	for o in get_tree().get_nodes_in_group("Portals"):
+		o.connect("body_entered", player, "use_portal", [o.get_name()])
+		
+	
+	nav_system.reload_nav()

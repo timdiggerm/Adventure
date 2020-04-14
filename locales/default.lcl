@@ -1,3 +1,4 @@
 background bg.png
 obj AdvThing 300 400
 obj Item 700 450
+portal default2 25 400

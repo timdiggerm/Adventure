@@ -17,3 +17,4 @@ func _on_ClickBox_clicked() -> void:
 			emit_signal("message", "Hard to do without a mirror")
 		_:
 			._on_ClickBox_clicked()
+

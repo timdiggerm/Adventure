@@ -96,3 +96,6 @@ func set_init_hh() -> void:
 	
 func getId() -> int:
 	return id
+
+func use_portal(obj, destination):
+	print(obj, " requesting transport to ", destination)
