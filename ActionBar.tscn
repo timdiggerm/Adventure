@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://ActionBar.gd" type="Script" id=1]
 [ext_resource path="res://images/eye.png" type="Texture" id=2]
@@ -10,7 +10,16 @@
 [ext_resource path="res://images/inventory.png" type="Texture" id=8]
 [ext_resource path="res://images/inventoryS.png" type="Texture" id=9]
 
+[sub_resource type="Theme" id=2]
+HBoxContainer/colors/bg_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="Theme" id=1]
+
 [node name="ActionBar" type="HBoxContainer"]
+margin_right = 800.0
+margin_bottom = 50.0
+size_flags_horizontal = 3
+theme = SubResource( 2 )
 custom_constants/separation = -2
 script = ExtResource( 1 )
 __meta__ = {
@@ -46,6 +55,19 @@ margin_right = 194.0
 margin_bottom = 50.0
 texture_normal = ExtResource( 8 )
 texture_pressed = ExtResource( 9 )
+
+[node name="MessageBox" type="RichTextLabel" parent="."]
+margin_left = 192.0
+margin_right = 800.0
+margin_bottom = 50.0
+grow_horizontal = 0
+rect_min_size = Vector2( 450, 40 )
+size_flags_horizontal = 3
+theme = SubResource( 1 )
+scroll_following = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="pressed" from="LookButton" to="." method="_on_LookButton_pressed"]
 [connection signal="pressed" from="WalkButton" to="." method="_on_WalkButton_pressed"]
 [connection signal="pressed" from="HandButton" to="." method="_on_HandButton_pressed"]

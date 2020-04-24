@@ -8,6 +8,7 @@ func _ready():
 	stationary = false
 	id = -1
 	thing_name = "Player"
+	speed = 100
 	set_init_hh()
 
 func _on_ClickBox_clicked() -> void:

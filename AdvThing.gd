@@ -18,10 +18,12 @@ var goal : Vector2 = Vector2(0,0)
 var velocity : Vector2 = Vector2()
 export (int) var speed : float = 50
 
-func _ready():
+func _init():
 	stationary = true
 	grabbable = false
 	add_to_group("Entities")
+
+func _ready():
 	set_init_hh()
 	id = global.nextId()
 	for p in get_collision_shape():

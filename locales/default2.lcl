@@ -1,3 +1,4 @@
+player Player
 background bg2.png
 obj AdvThing 300 400
 obj AdvThing 100 500

@@ -6,6 +6,9 @@ var scaleFactor = 0
 var idGenerator : RandomNumberGenerator
 var playerWidthHalf = 30
 var inventory = []
+var locales = {}
+var scenes = {}
+
 # class member variables go here, for example:
 # var a = 2
 # var b = "textvar"
