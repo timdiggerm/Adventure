@@ -5,7 +5,7 @@ signal viewInventory
 var message_box
 
 func _ready():
-	message_box = get_child(4) as RichTextLabel
+	message_box = get_child(4).get_child(1).get_child(0) as RichTextLabel
 	theme = Theme.new()
 	theme.copy_default_theme()
 	print(theme)

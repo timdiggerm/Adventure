@@ -80,20 +80,9 @@ func instantiate_player(player_name := "Player", x := 300, y := 300):
 	player.connect("changescene", self, "change_scene")
 	
 func load_locale(name : String) -> void:
-	#print("loading")
 	var future_children = []
 	var future_entities = []
 	var future_portals = []
-	#Create the player
-	#player = Player.new()
-	
-
-	
-	#player = load("res://Player.tscn").instance() as Player
-	#player.set_global_position(Vector2(200, 400))
-	#future_children.push_back(player)
-	#future_entities.push_back(player)
-	#player.connect("changescene", self, "change_scene")
 	
 	#Load the locale
 	var content = []
@@ -179,11 +168,9 @@ func change_scene(destination):
 	for o in get_tree().get_nodes_in_group("Entities"):
 		self.call_deferred("remove_child", o)
 		delete_list.push_back(o)
-		#o.queue_free()
 	for o in get_tree().get_nodes_in_group("Portals"):
 		self.call_deferred("remove_child", o)
 		delete_list.push_back(o)
-		#o.queue_free()
 	load_locale(destination)
 	for o in delete_list:
 		o.queue_free()
