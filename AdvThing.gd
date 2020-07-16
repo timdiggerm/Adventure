@@ -3,6 +3,7 @@ extends KinematicBody2D
 class_name AdvThing
 
 signal message(msg)
+signal update_inventory()
 
 var hh : float
 var stationary : bool
@@ -48,13 +49,19 @@ func _process(delta):
 						velocity = (goal - self.global_position).normalized() * speed
 						move_and_slide(velocity)
 			"grab":
-				print("Grab " + current.target.thing_name + " !")
+				
 				#I don't like doing it this way, but I don't know how
 				#else to do it, really
 				if thing_name == "Player":
 					global.inventory.append(current.target.duplicate())
 					current.target.queue_free()
-					pass
+					#This is the code I want to use...
+					#print("Grab " + current.target.thing_name + " !")
+					#emit_signal("update_inventory")
+					
+					#this is the code that actually works
+					global.main_scene.action_bar.populate_inventory()
+					
 				current = {}
 	elif queue.size() > 0:
 		current = queue.pop_front()
@@ -75,7 +82,6 @@ func get_collision_box() -> CollisionPolygon2D:
 	return get_node("CollisionPoly") as CollisionPolygon2D
 
 func _on_ClickBox_clicked() -> void:
-	#print("HELLO")
 	match global.cursor_state:
 		global.CURSOR_STATES.WALK:
 			pass

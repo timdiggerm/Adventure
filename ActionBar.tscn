@@ -1,14 +1,9 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://ActionBar.gd" type="Script" id=1]
 [ext_resource path="res://images/eye.png" type="Texture" id=2]
-[ext_resource path="res://images/eyeS.png" type="Texture" id=3]
 [ext_resource path="res://images/walk.png" type="Texture" id=4]
-[ext_resource path="res://images/walkS.png" type="Texture" id=5]
 [ext_resource path="res://images/hand.png" type="Texture" id=6]
-[ext_resource path="res://images/handS.png" type="Texture" id=7]
-[ext_resource path="res://images/inventory.png" type="Texture" id=8]
-[ext_resource path="res://images/inventoryS.png" type="Texture" id=9]
 
 [sub_resource type="Theme" id=1]
 HBoxContainer/colors/bg_color = Color( 0, 0, 0, 1 )
@@ -33,65 +28,58 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LookButton" type="TextureButton" parent="."]
-margin_right = 50.0
-margin_bottom = 50.0
-texture_normal = ExtResource( 2 )
-texture_pressed = ExtResource( 3 )
-stretch_mode = 5
+[node name="LookButton" type="Button" parent="."]
+margin_right = 62.0
+margin_bottom = 56.0
+icon = ExtResource( 2 )
 
-[node name="WalkButton" type="TextureButton" parent="."]
-margin_left = 48.0
-margin_right = 98.0
-margin_bottom = 50.0
-texture_normal = ExtResource( 4 )
-texture_pressed = ExtResource( 5 )
-stretch_mode = 5
+[node name="WalkButton" type="Button" parent="."]
+margin_left = 60.0
+margin_right = 122.0
+margin_bottom = 56.0
+icon = ExtResource( 4 )
 
-[node name="HandButton" type="TextureButton" parent="."]
-margin_left = 96.0
-margin_right = 146.0
-margin_bottom = 50.0
-texture_normal = ExtResource( 6 )
-texture_pressed = ExtResource( 7 )
-stretch_mode = 5
-
-[node name="InventoryButton" type="TextureButton" parent="."]
-margin_left = 144.0
-margin_right = 194.0
-margin_bottom = 50.0
-texture_normal = ExtResource( 8 )
-texture_pressed = ExtResource( 9 )
+[node name="HandButton" type="Button" parent="."]
+margin_left = 120.0
+margin_right = 182.0
+margin_bottom = 56.0
+icon = ExtResource( 6 )
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-margin_left = 192.0
+margin_left = 180.0
 margin_right = 1024.0
-margin_bottom = 50.0
+margin_bottom = 56.0
 size_flags_horizontal = 3
 
 [node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer"]
-margin_right = 832.0
-margin_bottom = 50.0
+margin_right = 844.0
+margin_bottom = 56.0
 size_flags_horizontal = 3
 texture = SubResource( 3 )
 
 [node name="HSplitContainer" type="HSplitContainer" parent="MarginContainer"]
-margin_right = 832.0
-margin_bottom = 50.0
+margin_right = 844.0
+margin_bottom = 56.0
 size_flags_horizontal = 3
+split_offset = 500
+dragger_visibility = 1
 
 [node name="MessageBox" type="RichTextLabel" parent="MarginContainer/HSplitContainer"]
-margin_right = 832.0
-margin_bottom = 50.0
+margin_right = 500.0
+margin_bottom = 56.0
 grow_horizontal = 0
-rect_min_size = Vector2( 450, 40 )
-size_flags_horizontal = 3
+rect_min_size = Vector2( 500, 40 )
+size_flags_horizontal = 0
 theme = SubResource( 4 )
 scroll_following = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Inventory" type="HBoxContainer" parent="MarginContainer/HSplitContainer"]
+margin_left = 844.0
+margin_right = 844.0
+margin_bottom = 56.0
 [connection signal="pressed" from="LookButton" to="." method="_on_LookButton_pressed"]
 [connection signal="pressed" from="WalkButton" to="." method="_on_WalkButton_pressed"]
 [connection signal="pressed" from="HandButton" to="." method="_on_HandButton_pressed"]
-[connection signal="pressed" from="InventoryButton" to="." method="_on_InventoryButton_pressed"]

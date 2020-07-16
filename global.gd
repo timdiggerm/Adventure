@@ -8,6 +8,7 @@ var playerWidthHalf = 30
 var inventory = []
 var locales = {}
 var scenes = {}
+var main_scene
 
 # class member variables go here, for example:
 # var a = 2

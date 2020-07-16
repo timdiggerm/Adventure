@@ -14,7 +14,7 @@ func _ready():
 	inventory_box = get_node("InventoryBox") as WindowDialog
 	background = get_node("Background") as Sprite
 	action_bar = get_node("ActionBar")
-	
+	global.main_scene = self
 	load_locale("default")
 	
 
@@ -64,7 +64,6 @@ func _handle_grab(obj) -> void:
 	player.queue.push_back({
 		"type":"grab",
 		"target":obj,
-		
 	})
 
 func _on_ActionBar_viewInventory():
@@ -143,6 +142,10 @@ func load_locale(name : String) -> void:
 		o.connect("message", self, "_handle_message")
 		if(o.grabbable):
 			o.connect("desired_grab", self, "_handle_grab")
+			#This next line _should_ work and even _does_ work, but then
+			#when the signal is emitted by the AdvThing, nothing happens
+			#so instead there's a kludgey but acceptable fix in AdvThing
+			#o.connect("update_inventory", action_bar, "populate_inventory")
 
 	#Connect all portals to the player
 	for o in future_portals:

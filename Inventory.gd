@@ -25,9 +25,12 @@ func populate_inventory():
 		add_inventory(obj)
 		
 func add_inventory(obj):
+	print(grid.get_child_count())
 	var item = TextureRect.new()
+	print(item)
 	item.set_texture(obj.get_child(obj.get_child_count()-1).get_texture())
 	grid.add_child(item)
+	print(grid.get_child_count())
 
 func _on_Dismiss_pressed():
 	hide()

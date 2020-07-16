@@ -3,18 +3,26 @@ extends HBoxContainer
 signal viewInventory
 
 var message_box
+var inventory_box
 
 func _ready():
-	message_box = get_child(4).get_child(1).get_child(0) as RichTextLabel
+	inventory_box = get_child(3).get_child(1).get_child(1) as HBoxContainer
+	message_box = get_child(3).get_child(1).get_child(0) as RichTextLabel
 	theme = Theme.new()
 	theme.copy_default_theme()
-	print(theme)
+	populate_inventory()
 	
+func populate_inventory():
+	for n in inventory_box.get_children():
+		n.queue_free()
 
-#func _process(delta):
-#	# Called every frame. Delta is time since last frame.
-#	# Update game logic here.
-#	pass
+	for obj in global.inventory:
+		add_inventory(obj)
+		
+func add_inventory(obj):
+	var item = Button.new()
+	item.icon = obj.get_child(obj.get_child_count()-1).get_texture()
+	inventory_box.add_child(item)
 
 func _on_WalkButton_pressed() -> void:
 	global.cursor_state = global.CURSOR_STATES.WALK
