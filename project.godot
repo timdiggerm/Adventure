@@ -14,6 +14,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://AdvThing.gd"
 }, {
+"base": "Button",
+"class": "InventoryButton",
+"language": "GDScript",
+"path": "res://InventoryButton.gd"
+}, {
 "base": "AdvThing",
 "class": "Item",
 "language": "GDScript",
@@ -31,6 +36,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "AdvThing": "",
+"InventoryButton": "",
 "Item": "",
 "NavigationSystem": "",
 "Player": ""

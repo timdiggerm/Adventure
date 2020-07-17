@@ -20,18 +20,21 @@ func populate_inventory():
 		add_inventory(obj)
 		
 func add_inventory(obj):
-	var item = Button.new()
+	var item = InventoryButton.new()
 	item.icon = obj.get_child(obj.get_child_count()-1).get_texture()
 	inventory_box.add_child(item)
 
 func _on_WalkButton_pressed() -> void:
 	global.cursor_state = global.CURSOR_STATES.WALK
+	Input.set_default_cursor_shape(Input.CURSOR_MOVE)
 
 func _on_LookButton_pressed() -> void:
 	global.cursor_state = global.CURSOR_STATES.LOOK
+	Input.set_default_cursor_shape(Input.CURSOR_CROSS)
 
 func _on_HandButton_pressed()  -> void:
 	global.cursor_state = global.CURSOR_STATES.HAND
+	Input.set_default_cursor_shape(Input.CURSOR_POINTING_HAND)
 
 func _on_InventoryButton_pressed():
 	emit_signal("viewInventory")

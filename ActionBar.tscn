@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://ActionBar.gd" type="Script" id=1]
-[ext_resource path="res://images/eye.png" type="Texture" id=2]
-[ext_resource path="res://images/walk.png" type="Texture" id=4]
-[ext_resource path="res://images/hand.png" type="Texture" id=6]
+[ext_resource path="res://images/walkBlank.png" type="Texture" id=2]
+[ext_resource path="res://images/eyeBlank.png" type="Texture" id=3]
+[ext_resource path="res://images/handBlank.png" type="Texture" id=4]
 
 [sub_resource type="Theme" id=1]
 HBoxContainer/colors/bg_color = Color( 0, 0, 0, 1 )
@@ -31,19 +31,19 @@ __meta__ = {
 [node name="LookButton" type="Button" parent="."]
 margin_right = 62.0
 margin_bottom = 56.0
-icon = ExtResource( 2 )
+icon = ExtResource( 3 )
 
 [node name="WalkButton" type="Button" parent="."]
 margin_left = 60.0
 margin_right = 122.0
 margin_bottom = 56.0
-icon = ExtResource( 4 )
+icon = ExtResource( 2 )
 
 [node name="HandButton" type="Button" parent="."]
 margin_left = 120.0
 margin_right = 182.0
 margin_bottom = 56.0
-icon = ExtResource( 6 )
+icon = ExtResource( 4 )
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 margin_left = 180.0

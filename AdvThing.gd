@@ -49,7 +49,6 @@ func _process(delta):
 						velocity = (goal - self.global_position).normalized() * speed
 						move_and_slide(velocity)
 			"grab":
-				
 				#I don't like doing it this way, but I don't know how
 				#else to do it, really
 				if thing_name == "Player":
@@ -60,8 +59,10 @@ func _process(delta):
 					#emit_signal("update_inventory")
 					
 					#this is the code that actually works
-					global.main_scene.action_bar.populate_inventory()
+					#global.main_scene.action_bar.populate_inventory()
 					
+					#just kidding this is better
+					global.main_scene.action_bar.add_inventory(global.inventory[global.inventory.size() - 1])
 				current = {}
 	elif queue.size() > 0:
 		current = queue.pop_front()
