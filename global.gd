@@ -9,6 +9,7 @@ var inventory = []
 var locales = {}
 var scenes = {}
 var main_scene
+var current_item : AdvThing
 
 # class member variables go here, for example:
 # var a = 2

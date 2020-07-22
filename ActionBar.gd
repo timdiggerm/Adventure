@@ -19,10 +19,12 @@ func populate_inventory():
 	for obj in global.inventory:
 		add_inventory(obj)
 		
-func add_inventory(obj):
-	var item = InventoryButton.new()
-	item.icon = obj.get_child(obj.get_child_count()-1).get_texture()
-	inventory_box.add_child(item)
+func add_inventory(obj : AdvThing):
+	var itemButton = InventoryButton.new()
+	itemButton.item = obj
+	itemButton.icon = obj.get_child(obj.get_child_count()-1).get_texture()
+	inventory_box.add_child(itemButton)
+	itemButton.connect("pressed", self, 'on_InventoryButton_pressed', [itemButton])
 
 func _on_WalkButton_pressed() -> void:
 	global.cursor_state = global.CURSOR_STATES.WALK
@@ -36,8 +38,11 @@ func _on_HandButton_pressed()  -> void:
 	global.cursor_state = global.CURSOR_STATES.HAND
 	Input.set_default_cursor_shape(Input.CURSOR_POINTING_HAND)
 
-func _on_InventoryButton_pressed():
-	emit_signal("viewInventory")
+func on_InventoryButton_pressed(itemButton) -> void:
+	global.cursor_state = global.CURSOR_STATES.ITEM
+	Input.set_custom_mouse_cursor(itemButton.icon, Input.CURSOR_CAN_DROP)
+	Input.set_default_cursor_shape(Input.CURSOR_CAN_DROP)
+	global.current_item = itemButton.item
 
 func update_text(message):
 	message_box.set_text(message)

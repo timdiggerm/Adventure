@@ -32,6 +32,7 @@ func _ready():
 	goal = self.global_position
 
 func _process(delta):
+	#Proccessing the current action in the action queue
 	if current.has("type"):
 		match current.type:
 			"move":
@@ -90,6 +91,8 @@ func _on_ClickBox_clicked() -> void:
 			pass
 		global.CURSOR_STATES.LOOK:
 			emit_signal("message", "You see the " + thing_name)
+		global.CURSOR_STATES.ITEM:
+			handle_item(global.current_item)
 		global.CURSOR_STATES.SMELL:
 			pass
 		global.CURSOR_STATES.TASTE:
@@ -108,3 +111,6 @@ func getId() -> int:
 
 func use_portal(obj, destination):
 	print(obj, " requesting transport to ", destination)
+
+func handle_item(item : AdvThing):
+	print("Using", item.thing_name)

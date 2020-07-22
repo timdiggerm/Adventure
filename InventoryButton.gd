@@ -2,6 +2,8 @@ extends Button
 
 class_name InventoryButton
 
+var item
+
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
