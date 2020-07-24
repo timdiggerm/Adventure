@@ -26,4 +26,3 @@ script = ExtResource( 5 )
 [node name="Dialog" parent="." instance=ExtResource( 7 )]
 
 [node name="InventoryBox" parent="." instance=ExtResource( 8 )]
-[connection signal="viewInventory" from="ActionBar" to="." method="_on_ActionBar_viewInventory"]

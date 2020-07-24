@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://entities/AdvThing.gd" type="Script" id=1]
+[ext_resource path="res://ClickBox.gd" type="Script" id=2]
+[ext_resource path="res://images/obj.png" type="Texture" id=3]
+
+[node name="AdvThing" type="KinematicBody2D"]
+script = ExtResource( 1 )
+
+[node name="CollisionPoly" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -50, 50, 50, 50, 50, 40, -50, 40 )
+
+[node name="ClickBox" type="Area2D" parent="."]
+script = ExtResource( 2 )
+
+[node name="ClickPoly" type="CollisionPolygon2D" parent="ClickBox"]
+polygon = PoolVector2Array( -50, -50, 50, -50, 50, 50, -50, 50 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 3 )
+[connection signal="clicked" from="ClickBox" to="." method="_on_ClickBox_clicked"]

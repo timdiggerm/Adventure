@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://entities/AdvThing.tscn" type="PackedScene" id=1]
+[ext_resource path="res://entities/Item.gd" type="Script" id=2]
+[ext_resource path="res://images/tool.png" type="Texture" id=3]
+
+[node name="Item" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="CollisionPoly" parent="." index="0"]
+polygon = PoolVector2Array( -3.16739, 25.0414, 3.00286, 25.0414, 3.00286, 5.31865, 5.64725, 3.55572, 5.75744, -24.2104, -5.81178, -24.2104, -5.81178, 3.55572, -3.16739, 5.31865 )
+
+[node name="ClickPoly" parent="ClickBox" index="0"]
+polygon = PoolVector2Array( -10, -30, 10, -30, 10, 30, -10, 30 )
+
+[node name="Sprite" parent="." index="2"]
+texture = ExtResource( 3 )

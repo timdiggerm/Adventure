@@ -22,7 +22,7 @@ func populate_inventory():
 func add_inventory(obj : AdvThing):
 	var itemButton = InventoryButton.new()
 	itemButton.item = obj
-	itemButton.icon = obj.get_child(obj.get_child_count()-1).get_texture()
+	itemButton.icon = obj.get_item_texture()
 	inventory_box.add_child(itemButton)
 	itemButton.connect("pressed", self, 'on_InventoryButton_pressed', [itemButton])
 

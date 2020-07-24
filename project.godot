@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "KinematicBody2D",
 "class": "AdvThing",
 "language": "GDScript",
-"path": "res://AdvThing.gd"
+"path": "res://entities/AdvThing.gd"
 }, {
 "base": "Button",
 "class": "InventoryButton",
@@ -22,7 +22,7 @@ _global_script_classes=[ {
 "base": "AdvThing",
 "class": "Item",
 "language": "GDScript",
-"path": "res://Item.gd"
+"path": "res://entities/Item.gd"
 }, {
 "base": "Node2D",
 "class": "NavigationSystem",
@@ -32,7 +32,7 @@ _global_script_classes=[ {
 "base": "AdvThing",
 "class": "Player",
 "language": "GDScript",
-"path": "res://Player.gd"
+"path": "res://entities/Player.gd"
 } ]
 _global_script_class_icons={
 "AdvThing": "",

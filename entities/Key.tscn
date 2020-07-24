@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://entities/Item.tscn" type="PackedScene" id=1]
+[ext_resource path="res://images/key.png" type="Texture" id=2]
+[ext_resource path="res://entities/Key.gd" type="Script" id=3]
+
+[node name="Key" instance=ExtResource( 1 )]
+script = ExtResource( 3 )
+
+[node name="CollisionPoly" parent="." index="0"]
+polygon = PoolVector2Array( -23.5417, 2.05589, 24.2615, 2.29372, 24.2615, -3.65195, -23.7796, -3.88978 )
+
+[node name="ClickPoly" parent="ClickBox" index="0"]
+position = Vector2( 0.35674, 1.54587 )
+scale = Vector2( 2.46412, 0.482231 )
+polygon = PoolVector2Array( -9.69858, -12.2582, 3.42758, -13.2446, 4.7788, -29.5195, 8.25337, -30.0127, 9.99066, -13.7378, 10.0872, 7.46897, 8.15686, 22.2644, 5.16486, 21.7712, 3.33106, 3.03035, -2.94247, 3.52354, -2.84595, 17.3326, -8.63691, 18.3189, -8.73342, 3.03035, -9.60206, 2.53718 )
+
+[node name="Sprite" parent="." index="2"]
+texture = ExtResource( 2 )

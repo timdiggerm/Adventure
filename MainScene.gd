@@ -16,9 +16,6 @@ func _ready():
 	action_bar = get_node("ActionBar")
 	global.main_scene = self
 	load_locale("default")
-	
-
-
 
 #input handling, if no gui elements have handled the event
 func _unhandled_input(event):
@@ -66,13 +63,47 @@ func _handle_grab(obj) -> void:
 		"target":obj,
 	})
 
+func _handle_item_use(obj) -> void:
+	#obj is the object that got clicked
+	#global.current_item is the item the user is using
+	
+	#Check if the obj and the item can have a meaningful
+	#interaction. If they can't, display a message
+	
+	if not global.current_item.can_interact(obj):
+	#	send a message to the message box
+		action_bar.update_text("That doesn't do anything")
+		return
+	
+	#Everything after this only happens if the items _can_ interact
+	var v = player.get_global_position() - obj.get_global_position()
+	var goal = obj.get_global_position() + v / v.length() * (obj.rough_radius + player.rough_radius)
+	player.queue.clear()
+	player.current = {}
+	
+	#Check if the obj and the item require proximity. If so, 
+	#add movement to the player's queue (see _handle_grab).
+	if global.current_item.requires_proximity(obj):
+		player.queue.push_back({
+			"type":"move",
+			"in_progress": false,
+			"path": nav_system.get_nav_path(player.get_global_position(), goal),
+		})
+	
+	#Add the item use to the player queue
+	player.queue.push_back({
+		"type":"item_use",
+		"obj":obj,
+		"item":global.current_item,
+	})
+
 func _on_ActionBar_viewInventory():
 	inventory_box.populate_inventory()
 	inventory_box.popup()
 
 func instantiate_player(player_name := "Player", x := 300, y := 300):
 	if not global.scenes.has(player_name):
-		global.scenes[player_name] = load("res://" + player_name + ".tscn")
+		global.scenes[player_name] = load("res://entities/" + player_name + ".tscn")
 	player = global.scenes[player_name].instance() as Node
 	player.set_global_position(Vector2(x, y))
 	
@@ -113,7 +144,7 @@ func load_locale(name : String) -> void:
 			"obj": #objects have a scene name and x y coords
 				#If it's not a scene we've loaded before, load it into the cache
 				if not global.scenes.has(tokens[1]):
-					global.scenes[tokens[1]] = load("res://" + tokens[1] + ".tscn")
+					global.scenes[tokens[1]] = load("res://entities/" + tokens[1] + ".tscn")
 				var obj = global.scenes[tokens[1]].instance() as Node
 					
 				future_children.push_back(obj)
@@ -140,6 +171,7 @@ func load_locale(name : String) -> void:
 	for o in future_entities:
 		# connect all entities' signals to appropriate callbacks
 		o.connect("message", self, "_handle_message")
+		o.connect("item_use", self, "_handle_item_use", [o])
 		if(o.grabbable):
 			o.connect("desired_grab", self, "_handle_grab")
 			#This next line _should_ work and even _does_ work, but then
