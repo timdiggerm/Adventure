@@ -1,7 +1,6 @@
 extends Item
 
 var locked = true
-var otherTexture
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -11,14 +10,12 @@ func _init():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	otherTexture = load('res://images/lockUn.png')
+	pass
 
 func switch_lock():
 	locked = not locked
-	var sprite = get_child(2)
-	var temp = sprite.texture
-	sprite.texture = otherTexture
-	otherTexture = temp
+	var sprite = get_child(2) as AnimatedSprite
+	sprite.set_frame((sprite.get_frame() + 1) % 2)
 	
 		
 func handle_item(item : AdvThing):

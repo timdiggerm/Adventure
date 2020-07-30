@@ -20,10 +20,10 @@ func _on_ClickBox_clicked() -> void:
 			._on_ClickBox_clicked()
 			
 func get_item_texture() -> Texture:
-	return get_child(2).texture
+	return get_child(2).frames.get_frame("default", 0)
 
-func set_item_texture(texture) -> void:
-	get_child(2).texture = texture
+#func set_item_texture(texture) -> void:
+	#get_child(2).texture = texture
 
 func can_interact(target) -> bool:
 	#Child classes should override this

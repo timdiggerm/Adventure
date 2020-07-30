@@ -14,6 +14,7 @@ var thing_name : String = "thing"
 var rough_radius : float = 0
 var queue : Array = []
 var current : Dictionary = {}
+var sprite : AnimatedSprite
 
 var path : Array = []
 var goal : Vector2 = Vector2(0,0)
@@ -31,6 +32,7 @@ func _ready():
 	for p in get_collision_shape():
 		rough_radius = max(rough_radius, p.length())
 	goal = self.global_position
+	sprite = get_child(2)
 
 func _process(delta):
 	#Proccessing the current action in the action queue
@@ -50,6 +52,7 @@ func _process(delta):
 					else:
 						velocity = (goal - self.global_position).normalized() * speed
 						move_and_slide(velocity)
+				movement_animation_control()
 			"grab":
 				#I don't like doing it this way, but I don't know how
 				#else to do it, really
@@ -74,6 +77,9 @@ func _process(delta):
 		current = queue.pop_front()
 		
 	update_z()
+
+func movement_animation_control() -> void:
+	pass
 
 func new_path(new_path) -> void:
 	goal = self.global_position
@@ -110,7 +116,7 @@ func update_z() -> void:
 	z_index = -(global.height - self.global_position.y - hh)
 	
 func set_init_hh() -> void:
-	hh = (get_child(2) as Sprite).get_texture().get_height()/2.0
+	hh = get_height()/2.0
 	
 func getId() -> int:
 	return id
@@ -120,3 +126,6 @@ func use_portal(obj, destination):
 
 func handle_item(item : AdvThing):
 	print("Using", item.thing_name)
+
+func get_height():
+	return get_child(2).frames.get_frame("default", 0).get_height()

@@ -1,8 +1,21 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://entities/AdvThing.tscn" type="PackedScene" id=1]
 [ext_resource path="res://entities/Item.gd" type="Script" id=2]
 [ext_resource path="res://images/tool.png" type="Texture" id=3]
+
+[sub_resource type="AtlasTexture" id=1]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 12, 50 )
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ SubResource( 1 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
 
 [node name="Item" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
@@ -14,4 +27,4 @@ polygon = PoolVector2Array( -3.16739, 25.0414, 3.00286, 25.0414, 3.00286, 5.3186
 polygon = PoolVector2Array( -10, -30, 10, -30, 10, 30, -10, 30 )
 
 [node name="Sprite" parent="." index="2"]
-texture = ExtResource( 3 )
+frames = SubResource( 2 )
