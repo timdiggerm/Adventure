@@ -9,7 +9,8 @@ func _ready():
 	id = -1
 	thing_name = "Player"
 	speed = 100
-	set_init_hh()
+	
+	#set_init_hh()
 
 func _on_ClickBox_clicked() -> void:
 	match global.cursor_state:
@@ -34,7 +35,7 @@ func movement_animation_control() -> void:
 		sprite.set_frame(0)
 	else:
 		if normalized.x > -sqrt(2)/2 and normalized.x < sqrt(2)/2:
-			if normalized.y < 0:
+			if normalized.y > 0:
 				sprite.set_animation("walkForward")
 			else:
 				sprite.set_animation("walkBackward")
@@ -44,3 +45,5 @@ func movement_animation_control() -> void:
 			else:
 				sprite.set_animation("walkRight")
 		sprite.play()
+
+

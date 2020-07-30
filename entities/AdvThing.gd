@@ -4,9 +4,7 @@ class_name AdvThing
 
 signal message(msg)
 signal item_use
-#signal update_inventory()
 
-var hh : float
 var stationary : bool
 var id : int
 var grabbable : bool
@@ -15,6 +13,7 @@ var rough_radius : float = 0
 var queue : Array = []
 var current : Dictionary = {}
 var sprite : AnimatedSprite
+var footprint_offset : Vector2
 
 var path : Array = []
 var goal : Vector2 = Vector2(0,0)
@@ -27,11 +26,21 @@ func _init():
 	add_to_group("Entities")
 
 func _ready():
-	set_init_hh()
 	id = global.nextId()
+	
+	#calculate the local centroid of the collision polygon
+	var centroid = Vector2(0,0)
+	var n = len(get_child(0).polygon)
+	for c in get_child(0).polygon:
+		centroid.x = c.x + centroid.x
+		centroid.y = c.y + centroid.y
+	centroid.x = centroid.x / n
+	centroid.y = centroid.y / n
+	footprint_offset = centroid
+	
 	for p in get_collision_shape():
-		rough_radius = max(rough_radius, p.length())
-	goal = self.global_position
+		rough_radius = max(rough_radius, (p-centroid).length())
+	goal = self.get_global_position()
 	sprite = get_child(2)
 
 func _process(delta):
@@ -39,18 +48,23 @@ func _process(delta):
 	if current.has("type"):
 		match current.type:
 			"move":
-				if !current.in_progress:
-					new_path(current.path)
+				if !current.in_progress: #If the thing isn't current moving, but it's supposed to
+					new_path(current.path) #then start moving!
 					current.in_progress = true
-				else:
-					if abs(goal.distance_to(self.global_position)) < 1:
+				else: #but if it is already in motion
+					#If it's near its next waypoint
+					if abs(goal.distance_to(self.get_global_position())) < 1:
+						#and it still has waypoints to go
 						if path.size() > 0:
+							#then head for tne next waypoint
 							goal = path.pop_front()
+						#otherwise, it's reached its goal. Stop!
 						else:
 							velocity = Vector2(0,0)
 							current = {}
+					#But if it's in motion, but not near its goal, then move toward the next waypoint
 					else:
-						velocity = (goal - self.global_position).normalized() * speed
+						velocity = (goal - self.get_global_position()).normalized() * speed
 						move_and_slide(velocity)
 				movement_animation_control()
 			"grab":
@@ -78,13 +92,14 @@ func _process(delta):
 		
 	update_z()
 
+#Any object that animates while moving should override this method
 func movement_animation_control() -> void:
 	pass
 
 func new_path(new_path) -> void:
-	goal = self.global_position
+	goal = self.get_global_position()
 	path.clear()
-	path.push_back(self.global_position)
+	path.push_back(self.get_global_position())
 	for p in new_path:
 		path.push_back(p)
 
@@ -113,10 +128,7 @@ func _on_ClickBox_clicked() -> void:
 			pass
 
 func update_z() -> void:
-	z_index = -(global.height - self.global_position.y - hh)
-	
-func set_init_hh() -> void:
-	hh = get_height()/2.0
+	z_index = -(global.height - self.get_global_position().y)
 	
 func getId() -> int:
 	return id
@@ -129,3 +141,6 @@ func handle_item(item : AdvThing):
 
 func get_height():
 	return get_child(2).frames.get_frame("default", 0).get_height()
+
+func get_global_position():
+	return .get_global_position() + footprint_offset

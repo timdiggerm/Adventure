@@ -49,8 +49,10 @@ func _handle_message(msg) -> void:
 	action_bar.update_text(msg)
 	
 func _handle_grab(obj) -> void:
-	var v = player.get_global_position() - obj.get_global_position()
-	var goal = obj.get_global_position() + v / v.length() * (obj.rough_radius + player.rough_radius)
+	var p = player.get_global_position()
+	var o = obj.get_global_position()
+	var v = p - o
+	var goal = o + v / v.length() * (obj.rough_radius + player.rough_radius)*2/3
 	player.queue.clear()
 	player.current = {}
 	player.queue.push_back({
