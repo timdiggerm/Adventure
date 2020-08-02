@@ -6,6 +6,7 @@ var action_bar : HBoxContainer
 var dialog_box : PopupDialog
 var inventory_box : WindowDialog
 var background : Sprite
+var current_locale : String
 
 func _ready():
 	#player = get_node("Player") as KinematicBody2D
@@ -115,75 +116,102 @@ func load_locale(name : String) -> void:
 	var future_children = []
 	var future_entities = []
 	var future_portals = []
+	current_locale = name
 	
 	#Load the locale
 	var content = []
 	#Check if we've visited this locale yet
-	if name in global.locales:
-		#If we have, just grab it from the cache
-		content = global.locales[name]
-	else:
-		#If we haven't load it from the file
-		var file = File.new()
-		file.open("locales/" + name + ".lcl", File.READ)
-		content = file.get_as_text().split("\n")
-		file.close()
-		#And stick it in the cache
-		global.locales[name] = content
-	for line in content:
-		var tokens = line.split(" ")
-		match tokens[0]: #tokens[0] contains the type of thing we're loading
-			"player":
-				instantiate_player(tokens[1], 200, 400)
-				future_children.push_back(player)
-				future_entities.push_back(player)
-			"background":
-				var img = Image.new()
-				img.load("images/" + tokens[1])
-				background.texture = ImageTexture.new()
-				background.texture.create_from_image(img, 0)
-				
-			"obj": #objects have a scene name and x y coords
-				#If it's not a scene we've loaded before, load it into the cache
-				if not global.scenes.has(tokens[1]):
-					global.scenes[tokens[1]] = load("res://entities/" + tokens[1] + ".tscn")
-				var obj = global.scenes[tokens[1]].instance() as Node
-					
+	if name in global.live_locales:
+		##THIS METHOD SHOULD RELOAD THE STUFF IN THE LIVE_LOCALE AS IF WE NEVER LEFT
+		background.texture = global.live_locales[name].pop_front()
+		for obj in global.live_locales[name]:
+			##if obj is Player:
+			##	obj.queue = []
+			##	obj.set_global_position(Vector2(200,400))
+				#future_children.push_back(obj)
+				#future_entities.push_back(obj)
+			if obj is AdvThing:
+				obj.add_to_group("Entities")
 				future_children.push_back(obj)
 				future_entities.push_back(obj)
-				obj.set_global_position(Vector2(tokens[2], tokens[3]))
-			"portal":
-				var destination = tokens[1]
-				#This is just how you make an Area. I don't know why. It works.
-				var obj = Area2D.new()
-				var coll_shape = CollisionShape2D.new()
-				var rect = RectangleShape2D.new()
-				rect.set_extents(Vector2(10, 10))
-				coll_shape.set_shape(rect)
-				obj.add_child(coll_shape)
-				
-				#add_child(obj)
-				future_children.push_back(obj)
-				future_portals.push_back(obj)
-				obj.set_global_position(Vector2(tokens[2], tokens[3]))
-				obj.set_name(destination)
+			elif obj is Area2D:
 				obj.add_to_group("Portals")
+				future_portals.push_back(obj)
+			future_children.push_back(obj)
+
+	else:
+		#If we've visited it before but for some it's no longer live...
+		if name in global.locale_listings:
+			#If we have, just grab it from the cache
+			content = global.locale_listings[name]
+		
+		#If we've never been to this locale before
+		else:
+			#If we haven't load it from the file
+			var file = File.new()
+			file.open("locales/" + name + ".lcl", File.READ)
+			content = file.get_as_text().split("\n")
+			file.close()
+			#And stick it in the cache
+			global.locale_listings[name] = content
+		for line in content:
+			var tokens = line.split(" ")
+			match tokens[0]: #tokens[0] contains the type of thing we're loading
+				"player":
+					if player is Player:
+						player.set_global_position(Vector2(200, 400))
+						player.stop()
+					else: #This only gets called if there is not already a Player in the game
+						instantiate_player(tokens[1], 200, 400)
+						future_children.push_back(player)
+						future_entities.push_back(player)
+				"background":
+					var img = Image.new()
+					img.load("images/" + tokens[1])
+					background.texture = ImageTexture.new()
+					background.texture.create_from_image(img, 0)
+					
+				"obj": #objects have a scene name and x y coords
+					#If it's not a scene we've loaded before, load it into the cache
+					if not global.scenes.has(tokens[1]):
+						global.scenes[tokens[1]] = load("res://entities/" + tokens[1] + ".tscn")
+					var obj = global.scenes[tokens[1]].instance() as Node
+						
+					future_children.push_back(obj)
+					future_entities.push_back(obj)
+					obj.set_global_position(Vector2(tokens[2], tokens[3]))
+				"portal":
+					var destination = tokens[1]
+					#This is just how you make an Area. I don't know why. It works.
+					var obj = Area2D.new()
+					var coll_shape = CollisionShape2D.new()
+					var rect = RectangleShape2D.new()
+					rect.set_extents(Vector2(10, 10))
+					coll_shape.set_shape(rect)
+					obj.add_child(coll_shape)
+					
+					#add_child(obj)
+					future_children.push_back(obj)
+					future_portals.push_back(obj)
+					obj.set_global_position(Vector2(tokens[2], tokens[3]))
+					obj.set_name(destination)
+					obj.add_to_group("Portals")
 	
 	#Process all entities for various actions
-	for o in future_entities:
-		# connect all entities' signals to appropriate callbacks
-		o.connect("message", self, "_handle_message")
-		o.connect("item_use", self, "_handle_item_use", [o])
-		if(o.grabbable):
-			o.connect("desired_grab", self, "_handle_grab")
-			#This next line _should_ work and even _does_ work, but then
-			#when the signal is emitted by the AdvThing, nothing happens
-			#so instead there's a kludgey but acceptable fix in AdvThing
-			#o.connect("update_inventory", action_bar, "populate_inventory")
+		for o in future_entities:
+			# connect all entities' signals to appropriate callbacks
+			o.connect("message", self, "_handle_message")
+			o.connect("item_use", self, "_handle_item_use", [o])
+			if(o.grabbable):
+				o.connect("desired_grab", self, "_handle_grab")
+				#This next line _should_ work and even _does_ work, but then
+				#when the signal is emitted by the AdvThing, nothing happens
+				#so instead there's a kludgey but acceptable fix in AdvThing
+				#o.connect("update_inventory", action_bar, "populate_inventory")
 
-	#Connect all portals to the player
-	for o in future_portals:
-		o.connect("body_entered", player, "use_portal", [o.get_name()])
+		#Connect all portals to the player
+		for o in future_portals:
+			o.connect("body_entered", player, "use_portal", [o.get_name()])
 	
 	#Put them all in the scene tree
 	for child in future_children:
@@ -202,12 +230,19 @@ func load_locale(name : String) -> void:
 
 func change_scene(destination):
 	var delete_list = []
+	delete_list.push_back(background.texture)
 	for o in get_tree().get_nodes_in_group("Entities"):
-		self.call_deferred("remove_child", o)
-		delete_list.push_back(o)
+		if not (o is Player):
+			self.call_deferred("remove_child", o)
+			delete_list.push_back(o)
+			o.remove_from_group("Entities")
 	for o in get_tree().get_nodes_in_group("Portals"):
 		self.call_deferred("remove_child", o)
 		delete_list.push_back(o)
-	load_locale(destination)
-	for o in delete_list:
-		o.queue_free()
+		o.remove_from_group("Portals")
+	global.live_locales[current_locale] = delete_list
+	
+	#for o in delete_list:
+		#o.queue_free()
+	delete_list = []
+	self.call_deferred("load_locale", destination)#load_locale(destination)

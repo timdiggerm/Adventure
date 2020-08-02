@@ -6,7 +6,8 @@ var scaleFactor = 0
 var idGenerator : RandomNumberGenerator
 var playerWidthHalf = 30
 var inventory = []
-var locales = {}
+var locale_listings = {}
+var live_locales = {}
 var scenes = {}
 var main_scene
 var current_item : AdvThing

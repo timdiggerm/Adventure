@@ -64,8 +64,13 @@ size_flags_horizontal = 3
 split_offset = 500
 dragger_visibility = 1
 
+[node name="Inventory" type="HBoxContainer" parent="MarginContainer/HSplitContainer"]
+margin_right = 332.0
+margin_bottom = 56.0
+
 [node name="MessageBox" type="RichTextLabel" parent="MarginContainer/HSplitContainer"]
-margin_right = 500.0
+margin_left = 344.0
+margin_right = 844.0
 margin_bottom = 56.0
 grow_horizontal = 0
 rect_min_size = Vector2( 500, 40 )
@@ -75,11 +80,6 @@ scroll_following = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="Inventory" type="HBoxContainer" parent="MarginContainer/HSplitContainer"]
-margin_left = 844.0
-margin_right = 844.0
-margin_bottom = 56.0
 [connection signal="pressed" from="LookButton" to="." method="_on_LookButton_pressed"]
 [connection signal="pressed" from="WalkButton" to="." method="_on_WalkButton_pressed"]
 [connection signal="pressed" from="HandButton" to="." method="_on_HandButton_pressed"]

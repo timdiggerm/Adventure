@@ -144,3 +144,9 @@ func get_height():
 
 func get_global_position():
 	return .get_global_position() + footprint_offset
+	
+func stop():
+	queue = []
+	velocity = Vector2(0,0)
+	current = {}
+	movement_animation_control()
