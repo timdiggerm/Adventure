@@ -1,3 +1,4 @@
 background [image file]
 obj [scene file name] [x] [y]
-exit [destination locale] [n] [x1] [y1] ... [xn] [yn]
+portal [x] [y] [target locale] ([target landing tag])
+landing [tag] [x] [y]
