@@ -123,22 +123,25 @@ func load_locale(name : String) -> void:
 	#Check if we've visited this locale yet
 	if name in global.live_locales:
 		##THIS METHOD SHOULD RELOAD THE STUFF IN THE LIVE_LOCALE AS IF WE NEVER LEFT
+		print(self.get_children())
 		background.texture = global.live_locales[name].pop_front()
 		for obj in global.live_locales[name]:
 			##if obj is Player:
 			##	obj.queue = []
 			##	obj.set_global_position(Vector2(200,400))
-				#future_children.push_back(obj)
 				#future_entities.push_back(obj)
 			if obj is AdvThing:
 				obj.add_to_group("Entities")
-				future_children.push_back(obj)
 				future_entities.push_back(obj)
 			elif obj is Area2D:
 				obj.add_to_group("Portals")
 				future_portals.push_back(obj)
 			future_children.push_back(obj)
-
+			
+			if(obj.has_method("get_parent")):
+				print(obj, obj.get_parent())
+			else:
+				print(obj)	
 	else:
 		#If we've visited it before but for some it's no longer live...
 		if name in global.locale_listings:
@@ -241,8 +244,17 @@ func change_scene(destination):
 		delete_list.push_back(o)
 		o.remove_from_group("Portals")
 	global.live_locales[current_locale] = delete_list
+
 	
 	#for o in delete_list:
 		#o.queue_free()
 	delete_list = []
+	
+#	for o in global.live_locales[current_locale]:
+#		if(o.has_method("get_parent")):
+#			print(o, o.get_parent())
+#		else:
+#			print(o)
+#	print(self)
+	#print(self.get_children())
 	self.call_deferred("load_locale", destination)#load_locale(destination)
