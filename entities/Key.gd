@@ -6,7 +6,7 @@ extends Item
 # var b = "text"
 
 func _init():
-	thing_name = "key"
+	thing_name = "Key"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

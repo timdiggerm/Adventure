@@ -5,20 +5,21 @@ class_name AdvThing
 signal message(msg)
 signal item_use
 
-var stationary : bool
-var id : int
+var stationary : bool				#Saves, indicates if the Thing can move
+var id : int						#Saves, should be unique to each item
 var grabbable : bool
-var thing_name : String = "thing"
+var thing_name : String = "AdvThing"
 var rough_radius : float = 0
+var footprint_offset : Vector2
+var sprite : AnimatedSprite
+export (int) var speed : float = 50
+
 var queue : Array = []
 var current : Dictionary = {}
-var sprite : AnimatedSprite
-var footprint_offset : Vector2
-
 var path : Array = []
 var goal : Vector2 = Vector2(0,0)
 var velocity : Vector2 = Vector2()
-export (int) var speed : float = 50
+
 
 func _init():
 	stationary = true
@@ -150,3 +151,66 @@ func stop():
 	velocity = Vector2(0,0)
 	current = {}
 	movement_animation_control()
+
+# Serializes all relevant state & config data into a dictionary for saving.
+# Child classes should include call to this parent method, appending their
+# own custom properties to the dictionary
+func serialize() -> Dictionary:
+	var global_trans = get_global_transform()
+	var data = {
+		#godot_config  = {
+		#'global_transform' : get_global_transform(),		#not supported by json apparently
+		
+		#This section will have to be handled differently by the loader
+		'global_transform_origin_x' : global_trans.origin.x,
+		'global_transform_origin_y' : global_trans.origin.y,
+		'global_transform_x_x' : global_trans.x.x,
+		'global_transform_x_y' : global_trans.x.y,
+		'global_transform_y_x' : global_trans.y.x,
+		'global_transform_y_y' : global_trans.y.y,
+		
+		'visible' : is_visible(),
+		'light_mask' : get_light_mask(),
+		'z_index' : get_z_index(),
+		'pickable' : is_pickable(),
+		'collision_layer' : get_collision_layer(),
+		'collision_mask' : get_collision_mask(),
+		#},
+		## Adventure Specific Config
+		'stationary' : stationary,
+		'id' : id,
+		'grabbable': grabbable,
+		'thing_name': thing_name,
+		'groups': self.get_groups(),
+		## Adventure Specific State
+		'queue' : queue,
+		'current' : current,
+		'path' : path,
+		'goal_x' : goal.x,
+		'goal_y' : goal.y,
+		'velocity_x' : velocity.x,
+		'velocity_y' : velocity.y,
+	}
+	
+	return data
+
+func deserialize(serial):
+	set_global_transform(Transform2D(Vector2(serial['global_transform_x_x'], serial['global_transform_x_y']), Vector2(serial['global_transform_y_x'], serial['global_transform_y_y']), Vector2(serial['global_transform_origin_x'], serial['global_transform_origin_y'])))
+	
+	set_visible(serial['visible'])
+	set_light_mask(serial['light_mask'])
+	set_z_index(serial['z_index'])
+	set_pickable(serial['pickable'])
+	set_collision_layer(serial['collision_layer'])
+	set_collision_mask(serial['collision_mask'])
+	
+	stationary = serial['stationary']
+	id = serial['id']
+	grabbable = serial['grabbable']
+	thing_name = serial['thing_name']
+	
+	queue = serial['queue']
+	current = serial['current']
+	path = serial['path']
+	goal = Vector2(serial['goal_x'], serial['goal_y'])
+	velocity = Vector2(serial['velocity_x'], serial['velocity_y'])

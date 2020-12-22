@@ -6,7 +6,7 @@ var locked = true
 # var b = "text"
 
 func _init():
-	thing_name = "lock"
+	thing_name = "Lock"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -19,5 +19,5 @@ func switch_lock():
 	
 		
 func handle_item(item : AdvThing):
-	if item.thing_name == "key":
+	if item.thing_name == "Key":
 		switch_lock()

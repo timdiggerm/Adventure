@@ -46,3 +46,13 @@ func on_InventoryButton_pressed(itemButton) -> void:
 
 func update_text(message):
 	message_box.set_text(message)
+
+
+func _on_SaveButton_pressed():
+	print("Prepare to save!")
+	global.main_scene.save_game()
+
+
+func _on_LoadButton_pressed():
+	print("Prepare to load!")
+	global.main_scene.load_game()

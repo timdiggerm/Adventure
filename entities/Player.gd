@@ -9,7 +9,6 @@ func _ready():
 	id = -1
 	thing_name = "Player"
 	speed = 100
-	
 	#set_init_hh()
 
 func _on_ClickBox_clicked() -> void:
@@ -22,8 +21,6 @@ func _on_ClickBox_clicked() -> void:
 			._on_ClickBox_clicked()
 
 func use_portal(obj, destination, landing="default"):
-	print("Prepare to travel to ", destination)
-	print(landing)
 	emit_signal("changescene", destination, landing)
 
 func get_height():

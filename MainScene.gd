@@ -22,7 +22,6 @@ func _ready():
 #input handling, if no gui elements have handled the event
 func _unhandled_input(event):
 	if event is InputEventMouseButton and not event.pressed:
-		#print("MainScene Handler")
 		if global.cursor_state == global.CURSOR_STATES.WALK:
 			player.queue.clear()
 			player.current = {}
@@ -113,7 +112,10 @@ func instantiate_player(player_name := "Player", x := 300, y := 300):
 	
 	player.connect("changescene", self, "change_scene")
 	
-func load_locale(name : String, landing = "default") -> void:
+func load_locale(name : String, landing = "default", saved_entities = []) -> void:
+	for e in saved_entities:
+		print(e)
+		
 	var future_children = []
 	var future_entities = []
 	var future_portals = []
@@ -173,14 +175,15 @@ func load_locale(name : String, landing = "default") -> void:
 					background.texture.create_from_image(img, 0)
 					
 				"obj": #objects have a scene name and x y coords
-					#If it's not a scene we've loaded before, load it into the cache
-					if not global.scenes.has(tokens[1]):
-						global.scenes[tokens[1]] = load("res://entities/" + tokens[1] + ".tscn")
-					var obj = global.scenes[tokens[1]].instance() as Node
-						
-					future_children.push_back(obj)
-					future_entities.push_back(obj)
-					obj.set_global_position(Vector2(tokens[2], tokens[3]))
+					if saved_entities.empty():
+						#If it's not a scene we've loaded before, load it into the cache
+						if not global.scenes.has(tokens[1]):
+							global.scenes[tokens[1]] = load("res://entities/" + tokens[1] + ".tscn")
+						var obj = global.scenes[tokens[1]].instance() as AdvThing
+							
+						future_children.push_back(obj)
+						future_entities.push_back(obj)
+						obj.set_global_position(Vector2(tokens[2], tokens[3]))
 				"portal":
 					var destination = tokens[3]
 					var portal_landing = "default"
@@ -203,7 +206,9 @@ func load_locale(name : String, landing = "default") -> void:
 					obj.add_to_group("Portals")
 				"landing":
 					current_landings[tokens[1]] = Vector2(tokens[2], tokens[3])
-	
+		if not saved_entities.empty():
+			future_entities = saved_entities
+			future_children = saved_entities.duplicate(true)
 	#Process all entities for various actions
 		for o in future_entities:
 			# connect all entities' signals to appropriate callbacks
@@ -240,7 +245,7 @@ func load_locale(name : String, landing = "default") -> void:
 	future_portals.clear()
 
 #Mostly deals with saving the current locale
-func change_scene(destination, landing="default"):
+func change_scene(destination, landing="default", saved_entities = []):
 	var delete_list = []
 	#delete_list.push_back(background.texture)
 	for o in get_tree().get_nodes_in_group("Entities"):
@@ -258,4 +263,68 @@ func change_scene(destination, landing="default"):
 		#o.queue_free()
 	delete_list = []
 
-	self.call_deferred("load_locale", destination, landing)#load_locale(destination)
+	self.call_deferred("load_locale", destination, landing, saved_entities)#load_locale(destination)
+
+func save_game(gamename="savegame"):
+	var save_game = File.new()
+	save_game.open("res://saves/savegame.save", File.WRITE)
+	var scene_data = {
+		'locale': current_locale
+	}
+	save_game.store_line(to_json(scene_data))
+	var save_nodes = get_tree().get_nodes_in_group("Entities")
+	for node in save_nodes:
+		# Check the node is an instanced scene so it can be instanced again during load.
+		if node.filename.empty():
+			print("persistent node '%s' is not an instanced scene, skipped" % node.name)
+			continue
+
+		# Check the node has a save function.
+		if !node.has_method("serialize"):
+			print("persistent node '%s' is missing a save() function, skipped" % node.name)
+			continue
+
+		# Call the node's save function.
+		var node_data = node.call("serialize")
+
+		# Store the save dictionary as a new line in the save file.
+		save_game.store_line(to_json(node_data))
+	save_game.close()
+
+func load_game():
+	var save_game = File.new()
+	if not save_game.file_exists("res://saves/savegame.save"):
+		return # Error! We don't have a save to load.
+	var saved_entities = []
+
+	# Load the file line by line and process that dictionary to restore
+	# the object it represents.
+	save_game.open("res://saves/savegame.save", File.READ)
+	
+	var locale = parse_json(save_game.get_line())['locale']
+	#print(locale)
+	while save_game.get_position() < save_game.get_len():
+		# Get the saved dictionary from the next line in the save file
+		var node_data = parse_json(save_game.get_line())
+
+		# Firstly, we need to create the object and add it to the tree and set its position.
+		if not global.scenes.has(node_data["thing_name"]):
+			global.scenes[node_data["thing_name"]] = load("res://entities/" + node_data["thing_name"] + ".tscn")
+		var obj = global.scenes[node_data["thing_name"]].instance() as AdvThing
+		#get_node(node_data["parent"]).add_child(new_object)
+		obj.deserialize(node_data)
+		#new_object.position = Vector2(node_data["pos_x"], node_data["pos_y"])
+		
+		if node_data["thing_name"] == "Player":
+			for prop in ['global_transform', 'visible', 'light_mask', 'z_index', 'collision_layer', 'collision_mask', 'stationary', 'id', 'grabbable', 'queue', 'current', 'path', 'goal', 'velocity']:
+				player[prop] = obj[prop]
+		else:
+			saved_entities.append(obj)
+		# Now we set the remaining variables.
+		#for i in node_data.keys():
+		#	if i == "filename" or i == "parent" or i == "pos_x" or i == "pos_y":
+		#		continue
+		#	new_object.set(i, node_data[i])
+
+	save_game.close()
+	change_scene(locale, "default", saved_entities)
