@@ -19,23 +19,6 @@ func _ready():
 	global.main_scene = self
 	load_locale("default")
 
-#input handling, if no gui elements have handled the event
-func _unhandled_input(event):
-	if event is InputEventMouseButton and not event.pressed:
-		if global.cursor_state == global.CURSOR_STATES.WALK:
-			player.queue.clear()
-			player.current = {}
-			player.queue.push_back({
-				"type":"move",
-				"in_progress": false,
-				"path": nav_system.get_nav_path(player.get_global_position(), event.position),
-			})
-
-#func _process(delta):
-#	# Called every frame. Delta is time since last frame.
-#	# Update game logic here.
-#	pass
-
 func _on_ActionBar_hand() -> void:
 	global.cursor_state = global.CURSOR_STATES.TOUCH
 
@@ -44,61 +27,32 @@ func _on_ActionBar_look() -> void:
 
 func _on_ActionBar_walk() -> void:
 	global.cursor_state = global.CURSOR_STATES.WALK
-	
+
 func _handle_message(msg) -> void:
 	#dialog_box.displayMessage(msg)
 	action_bar.update_text(msg)
-	
+
+#input handling, if no gui elements have handled the event
+func _unhandled_input(event):
+	if event is InputEventMouseButton and not event.pressed:
+		if global.cursor_state == global.CURSOR_STATES.WALK:
+			player.move_now(event.position)
+
+# Handling grabbing an object
 func _handle_grab(obj) -> void:
-	var p = player.get_global_position()
-	var o = obj.get_global_position()
-	var v = p - o
-	var goal = o + v / v.length() * (obj.rough_radius + player.rough_radius)*2/3
-	player.queue.clear()
-	player.current = {}
-	player.queue.push_back({
-		"type":"move",
-		"in_progress": false,
-		"path": nav_system.get_nav_path(player.get_global_position(), goal),
-	})
-	player.queue.push_back({
-		"type":"grab",
-		"target":obj,
-	})
+	player.grab(obj)
 
 func _handle_item_use(obj) -> void:
 	#obj is the object that got clicked
 	#global.current_item is the item the user is using
 	
-	#Check if the obj and the item can have a meaningful
-	#interaction. If they can't, display a message
-	
-	if not global.current_item.can_interact(obj):
-	#	send a message to the message box
+	#Check if the obj and the item can have a meaningful interaction
+	if global.current_item.can_interact(obj):
+		#Use the item
+		player.use_item(obj)
+	else:
+		#send a message to the message box
 		action_bar.update_text("That doesn't do anything")
-		return
-	
-	#Everything after this only happens if the items _can_ interact
-	var v = player.get_global_position() - obj.get_global_position()
-	var goal = obj.get_global_position() + v / v.length() * (obj.rough_radius + player.rough_radius)
-	player.queue.clear()
-	player.current = {}
-	
-	#Check if the obj and the item require proximity. If so, 
-	#add movement to the player's queue (see _handle_grab).
-	if global.current_item.requires_proximity(obj):
-		player.queue.push_back({
-			"type":"move",
-			"in_progress": false,
-			"path": nav_system.get_nav_path(player.get_global_position(), goal),
-		})
-	
-	#Add the item use to the player queue
-	player.queue.push_back({
-		"type":"item_use",
-		"obj":obj,
-		"item":global.current_item,
-	})
 
 func _on_ActionBar_viewInventory():
 	inventory_box.populate_inventory()
@@ -221,9 +175,9 @@ func load_locale(name : String, landing = "default", saved_entities = []) -> voi
 				#so instead there's a kludgey but acceptable fix in AdvThing
 				#o.connect("update_inventory", action_bar, "populate_inventory")
 
-		#Connect all portals to the player
+		#Connect all portals to the portal_director
 		for o in future_portals:
-			o.connect("body_entered", player, "use_portal", [o.get_name(), o.get_meta("landing")])
+			o.connect("body_entered", self, "portal_director", [o.get_name(), o.get_meta("landing")])
 	
 	if landing != "default" and current_landings.has(landing):
 		player.set_global_position(current_landings[landing])
@@ -243,6 +197,10 @@ func load_locale(name : String, landing = "default", saved_entities = []) -> voi
 	future_children.clear()
 	future_entities.clear()
 	future_portals.clear()
+
+# Currently just a very simple signal handler
+func portal_director(obj : AdvThing, destination : String, landing="default"):
+	obj.use_portal(destination, landing)
 
 #Mostly deals with saving the current locale
 func change_scene(destination, landing="default", saved_entities = []):

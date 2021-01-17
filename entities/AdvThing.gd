@@ -97,6 +97,19 @@ func _process(delta):
 func movement_animation_control() -> void:
 	pass
 
+#Add a movement to the queue
+func move(target_position) -> void:
+	queue.push_back({
+		"type":"move",
+		"in_progress": false,
+		"path": global.main_scene.nav_system.get_nav_path(self.get_global_position(), target_position),
+	})
+	
+func move_now(target_position) -> void:
+	queue.clear()
+	current = {}
+	move(target_position)
+
 func new_path(new_path) -> void:
 	goal = self.get_global_position()
 	path.clear()
@@ -134,8 +147,9 @@ func update_z() -> void:
 func getId() -> int:
 	return id
 
-func use_portal(obj, destination):
-	print(obj, " requesting transport to ", destination)
+func use_portal(destination, landing="default"):
+	pass
+	#print(thing_name, " requesting transport to ", destination, " at ", landing)
 
 func handle_item(item : AdvThing):
 	print("Using", item.thing_name)

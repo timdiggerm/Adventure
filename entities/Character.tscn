@@ -1,0 +1,234 @@
+[gd_scene load_steps=42 format=2]
+
+[ext_resource path="res://images/demoSprite2.png" type="Texture" id=1]
+[ext_resource path="res://entities/Character.gd" type="Script" id=2]
+[ext_resource path="res://ClickBox.gd" type="Script" id=3]
+
+[sub_resource type="AtlasTexture" id=1]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 0, 128, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=3]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 0, 512, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=4]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 64, 512, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=5]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 128, 512, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=6]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 192, 512, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=7]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 256, 512, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=8]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 320, 512, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=9]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 384, 512, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=10]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 448, 512, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=11]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 512, 512, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=12]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 0, 704, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=13]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 64, 704, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=14]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 128, 704, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=15]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 192, 704, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=16]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 256, 704, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=17]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 320, 704, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=18]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 384, 704, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=19]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 448, 704, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=20]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 512, 704, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=21]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 0, 640, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=22]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 64, 640, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=23]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 128, 640, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=24]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 192, 640, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=25]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 256, 640, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=26]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 320, 640, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=27]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 384, 640, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=28]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 448, 640, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=29]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 512, 640, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=30]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 0, 576, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=31]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 64, 576, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=32]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 128, 576, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=33]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 192, 576, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=34]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 256, 576, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=35]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 320, 576, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=36]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 384, 576, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=37]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 448, 576, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=38]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 512, 576, 64, 64 )
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ SubResource( 1 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ) ],
+"loop": true,
+"name": "walkBackward",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ), SubResource( 20 ) ],
+"loop": true,
+"name": "walkRight",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ), SubResource( 25 ), SubResource( 26 ), SubResource( 27 ), SubResource( 28 ), SubResource( 29 ) ],
+"loop": true,
+"name": "walkForward",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 30 ), SubResource( 31 ), SubResource( 32 ), SubResource( 33 ), SubResource( 34 ), SubResource( 35 ), SubResource( 36 ), SubResource( 37 ), SubResource( 38 ) ],
+"loop": true,
+"name": "walkLeft",
+"speed": 5.0
+} ]
+
+[node name="Character" type="KinematicBody2D"]
+script = ExtResource( 2 )
+
+[node name="CollisionPoly" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -14.98, 30.1195, 14.5106, 30.1195, 14.5106, 24.1738, -14.98, 24.4116 )
+
+[node name="ClickBox" type="Area2D" parent="."]
+script = ExtResource( 3 )
+
+[node name="ClickPoly" type="CollisionPolygon2D" parent="ClickBox"]
+polygon = PoolVector2Array( -6.18037, -17.2081, 5.47313, -16.9703, 9.75401, -12.4515, 9.99185, -0.084549, 14.2727, 5.14764, 14.2727, 17.039, 10.2297, 20.1307, 11.8945, 29.6438, -11.8882, 30.1195, -9.50995, 19.8929, -14.0287, 17.7525, -14.2665, 5.6233, -9.74779, -0.084549, -9.98561, -12.6894 )
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 2 )
+[connection signal="clicked" from="ClickBox" to="." method="_on_ClickBox_clicked"]

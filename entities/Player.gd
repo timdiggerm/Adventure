@@ -20,7 +20,7 @@ func _on_ClickBox_clicked() -> void:
 		_:
 			._on_ClickBox_clicked()
 
-func use_portal(obj, destination, landing="default"):
+func use_portal(destination, landing="default"):
 	emit_signal("changescene", destination, landing)
 
 func get_height():
@@ -44,4 +44,31 @@ func movement_animation_control() -> void:
 				sprite.set_animation("walkRight")
 		sprite.play()
 
+func grab(target):
+	var p = get_global_position()
+	var o = target.get_global_position()
+	var v = p - o
+	var goal = o + v / v.length() * (target.rough_radius + rough_radius)*2/3
+	move_now(goal)
+	queue.push_back({
+		"type":"grab",
+		"target":target,
+	})
 
+func use_item(obj):
+	#Everything after this only happens if the items _can_ interact
+	var v = get_global_position() - obj.get_global_position()
+	var goal = obj.get_global_position() + v / v.length() * (obj.rough_radius + rough_radius)
+	queue.clear()
+	current = {}
+	
+	#Check if the obj and the item require proximity. If so, 
+	#add movement to the player's queue (see _handle_grab).
+	if global.current_item.requires_proximity(obj):
+		move(goal)
+		
+	queue.push_back({
+		"type":"item_use",
+		"obj":obj,
+		"item":global.current_item,
+	})
