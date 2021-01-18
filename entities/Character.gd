@@ -2,15 +2,26 @@ extends AdvThing
 
 class_name Character
 
-func _ready():
+signal desired_conversation(character)
+
+func _init():
 	stationary = false
 	grabbable = false
+	conversable = true
 	thing_name = "Character"
 	
 func _process(delta):
 	if queue.size() == 0:
 		move(get_global_position() + Vector2(float(randi() % 100 - 50), float(randi() % 100 - 50)))
 	._process(delta)
+
+func _on_ClickBox_clicked() -> void:
+	#print("HELLO")
+	match global.cursor_state:
+		global.CURSOR_STATES.TALK:
+			emit_signal("desired_conversation", self)
+		_: #for everything else, defer to parent function
+			._on_ClickBox_clicked()	
 
 func movement_animation_control() -> void:
 	var normalized = velocity.normalized()

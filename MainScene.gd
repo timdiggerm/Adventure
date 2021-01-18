@@ -42,6 +42,9 @@ func _unhandled_input(event):
 func _handle_grab(obj) -> void:
 	player.grab(obj)
 
+func _handle_conversation(obj) -> void:
+	print("Let's talk to ", obj)
+
 func _handle_item_use(obj) -> void:
 	#obj is the object that got clicked
 	#global.current_item is the item the user is using
@@ -67,9 +70,6 @@ func instantiate_player(player_name := "Player", x := 300, y := 300):
 	player.connect("changescene", self, "change_scene")
 	
 func load_locale(name : String, landing = "default", saved_entities = []) -> void:
-	for e in saved_entities:
-		print(e)
-		
 	var future_children = []
 	var future_entities = []
 	var future_portals = []
@@ -134,7 +134,7 @@ func load_locale(name : String, landing = "default", saved_entities = []) -> voi
 						if not global.scenes.has(tokens[1]):
 							global.scenes[tokens[1]] = load("res://entities/" + tokens[1] + ".tscn")
 						var obj = global.scenes[tokens[1]].instance() as AdvThing
-							
+
 						future_children.push_back(obj)
 						future_entities.push_back(obj)
 						obj.set_global_position(Vector2(tokens[2], tokens[3]))
@@ -174,6 +174,8 @@ func load_locale(name : String, landing = "default", saved_entities = []) -> voi
 				#when the signal is emitted by the AdvThing, nothing happens
 				#so instead there's a kludgey but acceptable fix in AdvThing
 				#o.connect("update_inventory", action_bar, "populate_inventory")
+			if(o.conversable):
+				o.connect("desired_conversation", self, "_handle_conversation")
 
 		#Connect all portals to the portal_director
 		for o in future_portals:

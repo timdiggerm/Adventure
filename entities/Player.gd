@@ -4,7 +4,7 @@ class_name Player
 
 signal changescene(destination, landing)
 
-func _ready():
+func _init():
 	stationary = false
 	id = -1
 	thing_name = "Player"

@@ -5,9 +5,10 @@ class_name AdvThing
 signal message(msg)
 signal item_use
 
-var stationary : bool				#Saves, indicates if the Thing can move
-var id : int						#Saves, should be unique to each item
-var grabbable : bool
+var stationary : bool				# Saves, indicates if the Thing can move
+var id : int						# Saves, should be unique to each item
+var grabbable : bool 				# Can the player grab this?
+var conversable: bool				# Can the player converse with this?
 var thing_name : String = "AdvThing"
 var rough_radius : float = 0
 var footprint_offset : Vector2
@@ -24,6 +25,7 @@ var velocity : Vector2 = Vector2()
 func _init():
 	stationary = true
 	grabbable = false
+	conversable = false
 	add_to_group("Entities")
 
 func _ready():
@@ -140,6 +142,8 @@ func _on_ClickBox_clicked() -> void:
 			pass
 		global.CURSOR_STATES.LISTEN:
 			pass
+		global.CURSOR_STATES.TALK:
+			pass
 
 func update_z() -> void:
 	z_index = -(global.height - self.get_global_position().y)
@@ -194,6 +198,7 @@ func serialize() -> Dictionary:
 		'stationary' : stationary,
 		'id' : id,
 		'grabbable': grabbable,
+		'conversable': conversable,
 		'thing_name': thing_name,
 		'groups': self.get_groups(),
 		## Adventure Specific State
@@ -221,6 +226,7 @@ func deserialize(serial):
 	stationary = serial['stationary']
 	id = serial['id']
 	grabbable = serial['grabbable']
+	conversable = serial['conversable']
 	thing_name = serial['thing_name']
 	
 	queue = serial['queue']

@@ -6,8 +6,8 @@ var message_box
 var inventory_box
 
 func _ready():
-	inventory_box = get_child(3).get_child(1).get_child(0) as HBoxContainer
-	message_box = get_child(3).get_child(1).get_child(1) as RichTextLabel
+	inventory_box = get_child(4).get_child(1).get_child(0) as HBoxContainer
+	message_box = get_child(4).get_child(1).get_child(1) as RichTextLabel
 	theme = Theme.new()
 	theme.copy_default_theme()
 	populate_inventory()
@@ -38,6 +38,10 @@ func _on_HandButton_pressed()  -> void:
 	global.cursor_state = global.CURSOR_STATES.HAND
 	Input.set_default_cursor_shape(Input.CURSOR_POINTING_HAND)
 
+func _on_TalkButton_pressed():
+	global.cursor_state = global.CURSOR_STATES.TALK
+	Input.set_default_cursor_shape(Input.CURSOR_IBEAM)
+
 func on_InventoryButton_pressed(itemButton) -> void:
 	global.cursor_state = global.CURSOR_STATES.ITEM
 	Input.set_custom_mouse_cursor(itemButton.icon, Input.CURSOR_CAN_DROP)
@@ -56,3 +60,5 @@ func _on_SaveButton_pressed():
 func _on_LoadButton_pressed():
 	print("Prepare to load!")
 	global.main_scene.load_game()
+
+

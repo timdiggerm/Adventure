@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://ActionBar.gd" type="Script" id=1]
 [ext_resource path="res://images/walkBlank.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://images/handBlank.png" type="Texture" id=4]
 [ext_resource path="res://images/save.png" type="Texture" id=5]
 [ext_resource path="res://images/load.png" type="Texture" id=6]
+[ext_resource path="res://images/talkBlank.png" type="Texture" id=7]
 
 [sub_resource type="Theme" id=1]
 HBoxContainer/colors/bg_color = Color( 0, 0, 0, 1 )
@@ -47,35 +48,41 @@ margin_right = 182.0
 margin_bottom = 56.0
 icon = ExtResource( 4 )
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="TalkButton" type="Button" parent="."]
 margin_left = 180.0
+margin_right = 242.0
+margin_bottom = 56.0
+icon = ExtResource( 7 )
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+margin_left = 240.0
 margin_right = 904.0
 margin_bottom = 56.0
 size_flags_horizontal = 3
 
 [node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer"]
-margin_right = 724.0
+margin_right = 664.0
 margin_bottom = 56.0
 size_flags_horizontal = 3
 texture = SubResource( 3 )
 
 [node name="HSplitContainer" type="HSplitContainer" parent="MarginContainer"]
-margin_right = 724.0
+margin_right = 664.0
 margin_bottom = 56.0
 size_flags_horizontal = 3
 split_offset = 500
 dragger_visibility = 1
 
 [node name="Inventory" type="HBoxContainer" parent="MarginContainer/HSplitContainer"]
-margin_right = 212.0
+margin_right = 352.0
 margin_bottom = 56.0
 
 [node name="MessageBox" type="RichTextLabel" parent="MarginContainer/HSplitContainer"]
-margin_left = 224.0
-margin_right = 724.0
+margin_left = 364.0
+margin_right = 664.0
 margin_bottom = 56.0
 grow_horizontal = 0
-rect_min_size = Vector2( 500, 40 )
+rect_min_size = Vector2( 300, 40 )
 size_flags_horizontal = 0
 theme = SubResource( 4 )
 scroll_following = true
@@ -103,5 +110,6 @@ __meta__ = {
 [connection signal="pressed" from="LookButton" to="." method="_on_LookButton_pressed"]
 [connection signal="pressed" from="WalkButton" to="." method="_on_WalkButton_pressed"]
 [connection signal="pressed" from="HandButton" to="." method="_on_HandButton_pressed"]
+[connection signal="pressed" from="TalkButton" to="." method="_on_TalkButton_pressed"]
 [connection signal="pressed" from="SaveButton" to="." method="_on_SaveButton_pressed"]
 [connection signal="pressed" from="LoadButton" to="." method="_on_LoadButton_pressed"]
