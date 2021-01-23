@@ -3,8 +3,6 @@ extends Node
 var player : KinematicBody2D
 var nav_system : NavigationSystem
 var action_bar : HBoxContainer
-var dialog_box : PopupDialog
-var inventory_box : WindowDialog
 var background : Sprite
 var current_locale : String
 var current_landings : Dictionary
@@ -12,8 +10,6 @@ var current_landings : Dictionary
 func _ready():
 	#player = get_node("Player") as KinematicBody2D
 	nav_system = get_node("NavigationSystem") as NavigationSystem
-	dialog_box = get_node("Dialog") as PopupDialog
-	inventory_box = get_node("InventoryBox") as WindowDialog
 	background = get_node("Background") as Sprite
 	action_bar = get_node("ActionBar")
 	global.main_scene = self
@@ -44,6 +40,7 @@ func _handle_grab(obj) -> void:
 
 func _handle_conversation(obj) -> void:
 	print("Let's talk to ", obj)
+	get_child(3).visible = true
 
 func _handle_item_use(obj) -> void:
 	#obj is the object that got clicked
@@ -56,10 +53,6 @@ func _handle_item_use(obj) -> void:
 	else:
 		#send a message to the message box
 		action_bar.update_text("That doesn't do anything")
-
-func _on_ActionBar_viewInventory():
-	inventory_box.populate_inventory()
-	inventory_box.popup()
 
 func instantiate_player(player_name := "Player", x := 300, y := 300):
 	if not global.scenes.has(player_name):

@@ -1,12 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://MainScene.gd" type="Script" id=1]
 [ext_resource path="res://NavigationSystem.tscn" type="PackedScene" id=2]
 [ext_resource path="res://ActionBar.tscn" type="PackedScene" id=3]
 [ext_resource path="res://images/bg.png" type="Texture" id=4]
 [ext_resource path="res://Background.gd" type="Script" id=5]
-[ext_resource path="res://Dialog.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Inventory.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Conversation.tscn" type="PackedScene" id=6]
 
 [node name="MainScene" type="Node"]
 script = ExtResource( 1 )
@@ -23,6 +22,7 @@ z_index = -1
 texture = ExtResource( 4 )
 script = ExtResource( 5 )
 
-[node name="Dialog" parent="." instance=ExtResource( 7 )]
-
-[node name="InventoryBox" parent="." instance=ExtResource( 8 )]
+[node name="Conversation" parent="." instance=ExtResource( 6 )]
+visible = false
+margin_top = 550.0
+margin_bottom = 29.0

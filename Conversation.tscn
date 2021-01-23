@@ -1,0 +1,57 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Conversation.gd" type="Script" id=1]
+[ext_resource path="res://images/player.png" type="Texture" id=2]
+
+[sub_resource type="Theme" id=1]
+
+[node name="Conversation" type="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = -550.0
+rect_min_size = Vector2( 1024, 50 )
+size_flags_horizontal = 3
+theme = SubResource( 1 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ConversationContainer" type="HBoxContainer" parent="."]
+margin_right = 1024.0
+margin_bottom = 50.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DialogueBox" type="HBoxContainer" parent="ConversationContainer"]
+margin_right = 900.0
+margin_bottom = 50.0
+
+[node name="Sprite" type="Sprite" parent="ConversationContainer/DialogueBox"]
+texture = ExtResource( 2 )
+centered = false
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ConversationContainer/DialogueBox"]
+margin_left = 50.0
+margin_right = 900.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 900, 50 )
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+custom_colors/selection_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+
+[node name="ButtonBox" type="VBoxContainer" parent="ConversationContainer"]
+margin_left = 950.0
+margin_right = 1024.0
+margin_bottom = 50.0
+size_flags_horizontal = 3
+
+[node name="Default" type="Button" parent="ConversationContainer/ButtonBox"]
+margin_right = 74.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 50, 25 )
+text = "OK"
+[connection signal="pressed" from="ConversationContainer/ButtonBox/Default" to="." method="_on_Default_pressed"]
